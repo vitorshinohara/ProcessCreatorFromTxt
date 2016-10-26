@@ -15,11 +15,14 @@ public class Manipular {
       BufferedReader lerArq = new BufferedReader(arq);
  
       String linha = lerArq.readLine(); // lê a primeira linha
+      
+      int id;
 
       while (linha != null) {
         System.out.printf("%s\n", linha);
  
         linha = lerArq.readLine(); // lê da segunda até a última linha
+        
       }
  
       arq.close();
