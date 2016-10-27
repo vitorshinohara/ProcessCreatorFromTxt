@@ -1,33 +1,75 @@
 package GerenciarArquivo;
 
+import Processos.Estado;
 import Processos.Processo;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
- 
+import java.util.LinkedList;
+import java.util.StringTokenizer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class Manipular {
- 
+
+    LinkedList<Processo> listaProcessos = new LinkedList<Processo>();
+
     public void lerArquivo() {
+        String linha;                                                           // Cria variável para armazenar a linha do arquivo a ser lido
+        String id;
+        String duracao;
+        String prioridade;
+        String tempo;
+
         try {
-            FileReader arq = new FileReader("teste.txt");
-            BufferedReader lerArq = new BufferedReader(arq);
-            String linha;
-            List<Processo> ListaProcesso = new ArrayList();
-            Processo processo = null;
 
-            while ((linha = lerArq.readLine()) != null) {
-                for(int i=0; i < linha.length(); i++){
-                    if(!(",".equals(linha))){
+            FileReader reader = new FileReader("teste.txt");
+            BufferedReader leitor = new BufferedReader(reader);
+            StringTokenizer st = null;
 
-                    }
+            while ((linha = leitor.readLine()) != null) {
+
+                st = new StringTokenizer(linha, " ");                           // Define token de separação.
+                id = st.nextToken();                                            // Pega o ID e armazena na variável
+                duracao = st.nextToken();                                       // Pega a duração e armazena na variável
+                prioridade = st.nextToken();                                    // Pega a prioridade e armazena na variável
+                tempo = st.nextToken();                                         // Pega o tempo de chegada e armazena na variável
+
+                LinkedList<Integer> listaES = new LinkedList<Integer>();        // Cria a lista de Entrada e Saída.
+
+                while (st.hasMoreTokens()) {
+                    listaES.add(Integer.parseInt(st.nextToken()));              // Caso exista, adiciona os elementos na lista de Entrada e Saída
                 }
-                ListaProcesso.add(processo);
+
+                criaProcesso(id, duracao, prioridade, tempo, listaES);          // Cria o processo e adiciona na lista
+
             }
-            arq.close();
-        } catch (IOException e) {
-            System.err.printf("Erro na abertura do arquivo: %s.\n", e.getMessage());
+            reader.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Manipular.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        printarLinkedList();
+    }
+
+    public void criaProcesso(String idStr, String duracaoStr, String prioridadeStr, String tempoStr, LinkedList<Integer> lista) {
+        int id = Integer.parseInt(idStr);                                       // Faz as conversões
+        int duracao = Integer.parseInt(duracaoStr);
+        int prioridade = Integer.parseInt(prioridadeStr);
+        int tempo = Integer.parseInt(tempoStr);
+
+        Processo p = new Processo(id, duracao, prioridade, Estado.Pronto, tempo, lista);
+        this.listaProcessos.add(p);
+
+    }
+
+    public LinkedList<Processo> getLinkedList() {
+        return this.listaProcessos;
+    }
+
+    public void printarLinkedList() {                                            // Imprime a lista de processos retiradas do arquivo
+        for (int i = 0; i < this.listaProcessos.size(); i++) {
+            System.out.println(this.listaProcessos.get(i).toString());
         }
     }
+
 }
