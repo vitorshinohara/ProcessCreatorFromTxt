@@ -18,9 +18,15 @@ public class Processo {
     private int prioridade;
     private Estado estado;
     private int tempo;
-    private LinkedList<Integer> linkedList = new LinkedList<Integer>();
 
-    
+    public Processo(int id, int duracao, int prioridade, Estado estado, int tempo) {
+        this.id = id;
+        this.duracao = duracao;
+        this.prioridade = prioridade;
+        this.estado = estado;
+        this.tempo = tempo;
+    }
+
     public int getId() {
         return id;
     }
