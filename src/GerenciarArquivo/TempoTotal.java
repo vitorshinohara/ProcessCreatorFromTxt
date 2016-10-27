@@ -14,11 +14,12 @@ import java.util.LinkedList;
  */
 public class TempoTotal {
     public int total=0;
+    
     public TempoTotal(LinkedList<Processo> processo) {
         for(int i=0; i < processo.size(); i++){
-            total += processo.get(i).getTempo();
+            total += processo.get(i).getDuracao();
         }
-        
+
         System.out.println("Tempo Total: "+total);
     }
 }
