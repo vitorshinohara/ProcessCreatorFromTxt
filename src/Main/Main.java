@@ -5,6 +5,7 @@
  */
 package Main;
 
+import Escalonador.ShortestJobFirst;
 import GerenciarArquivo.Manipular;
 import GerenciarArquivo.TempoTotal;
 
@@ -20,6 +21,9 @@ public class Main {
     public static void main(String[] args) {
         Manipular manipular = new Manipular();
         manipular.lerArquivo();
-        TempoTotal tempoTotal = new TempoTotal(manipular.getLinkedList());
+        //TempoTotal tempoTotal = new TempoTotal(manipular.getLinkedList());
+        
+        ShortestJobFirst sjf = new ShortestJobFirst();
+        sjf.start();
     }
 }

@@ -14,7 +14,7 @@ import java.util.LinkedList;
  */
 public class Prioridade {
     LinkedList<Processo> listaPronto = null;
-    LinkedList<Processo> listaBloqueado = new LinkedList<Processo>();
+    LinkedList<Processo> listaBloqueado = new LinkedList<>();
     int tempo = 0;
     
 
