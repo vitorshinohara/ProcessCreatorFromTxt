@@ -18,15 +18,17 @@ public class Processo {
     private int prioridade;
     private Estado estado;
     private int tempo;
+    private Tipo tipo;
     private LinkedList<Integer> listaES = new LinkedList<Integer>();
 
-    public Processo(int id, int duracao, int prioridade, Estado estado, int tempo, LinkedList<Integer> listaES) {
+    public Processo(int id, int duracao, int prioridade, Estado estado, int tempo, LinkedList<Integer> listaES, Tipo tipo) {
         this.id = id;
         this.duracao = duracao;
         this.prioridade = prioridade;
         this.estado = estado;
         this.tempo = tempo;
         this.listaES = listaES;
+        this.tipo = tipo;
     }
 
     public int getId() {
@@ -77,8 +79,19 @@ public class Processo {
         this.listaES = listaES;
     }
 
+    public Tipo getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(Tipo tipo) {
+        this.tipo = tipo;
+    }
+
     @Override
     public String toString() {
-        return "Processo[" + "ID:" + id + ", Duração:" + duracao + ", Prioridade:" + prioridade + ", Estado:" + estado + ", Tempo:" + tempo + ", Lista de Entrada/Saída:" + listaES + ']';
+        return "Processo[" + "ID:" + id + ", Duracao:" + duracao + ", Prioridade:" + prioridade + ", Estado:" + estado + ", Tempo:" + tempo + ", Tipo:" + tipo + ", Lista de Entrada e Saída:" + listaES + ']';
     }
+
+    
+    
 }

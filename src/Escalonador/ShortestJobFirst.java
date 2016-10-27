@@ -10,9 +10,10 @@ import java.util.LinkedList;
 
 /**
  *
- * @author elivelton
+ * @author vitor
  */
-public class Prioridade {
+public class ShortestJobFirst {
+    
     LinkedList<Processo> listaPronto = null;
     LinkedList<Processo> listaBloqueado = new LinkedList<Processo>();
     int tempo = 0;

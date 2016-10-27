@@ -2,6 +2,7 @@ package GerenciarArquivo;
 
 import Processos.Estado;
 import Processos.Processo;
+import Processos.Tipo;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -52,8 +53,8 @@ public class Manipular {
         int duracao = Integer.parseInt(duracaoStr);
         int prioridade = Integer.parseInt(prioridadeStr);
         int tempo = Integer.parseInt(tempoStr);
-
-        Processo p = new Processo(id, duracao, prioridade, Estado.Pronto, tempo, lista);
+        Tipo tipo = Tipo.Usuario;
+        Processo p = new Processo(id, duracao, prioridade, Estado.Pronto, tempo, lista,tipo);
         this.listaProcessos.add(p);
     }
 
