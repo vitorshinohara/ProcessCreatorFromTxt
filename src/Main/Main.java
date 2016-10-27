@@ -6,6 +6,7 @@
 package Main;
 
 import GerenciarArquivo.Manipular;
+import GerenciarArquivo.TempoTotal;
 
 /**
  *
@@ -19,7 +20,7 @@ public class Main {
     public static void main(String[] args) {
         Manipular manipular = new Manipular();
         manipular.lerArquivo();
-        
+        TempoTotal  calculaTempoTotal = new TempoTotal(manipular.getLinkedList());
     }
     
 }

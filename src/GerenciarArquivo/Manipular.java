@@ -11,8 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Manipular {
-
-    LinkedList<Processo> listaProcessos = new LinkedList<Processo>();
+    LinkedList<Processo> listaProcessos = new LinkedList();
 
     public void lerArquivo() {
         String linha;                                                           // Cria variável para armazenar a linha do arquivo a ser lido
@@ -22,13 +21,11 @@ public class Manipular {
         String tempo;
 
         try {
-
             FileReader reader = new FileReader("teste.txt");
             BufferedReader leitor = new BufferedReader(reader);
             StringTokenizer st = null;
 
             while ((linha = leitor.readLine()) != null) {
-
                 st = new StringTokenizer(linha, " ");                           // Define token de separação.
                 id = st.nextToken();                                            // Pega o ID e armazena na variável
                 duracao = st.nextToken();                                       // Pega a duração e armazena na variável
@@ -42,13 +39,12 @@ public class Manipular {
                 }
 
                 criaProcesso(id, duracao, prioridade, tempo, listaES);          // Cria o processo e adiciona na lista
-
             }
             reader.close();
         } catch (IOException ex) {
             Logger.getLogger(Manipular.class.getName()).log(Level.SEVERE, null, ex);
         }
-        printarLinkedList();
+        //printarLinkedList();
     }
 
     public void criaProcesso(String idStr, String duracaoStr, String prioridadeStr, String tempoStr, LinkedList<Integer> lista) {
@@ -59,7 +55,6 @@ public class Manipular {
 
         Processo p = new Processo(id, duracao, prioridade, Estado.Pronto, tempo, lista);
         this.listaProcessos.add(p);
-
     }
 
     public LinkedList<Processo> getLinkedList() {
@@ -71,5 +66,4 @@ public class Manipular {
             System.out.println(this.listaProcessos.get(i).toString());
         }
     }
-
 }
