@@ -18,6 +18,7 @@ public class Processo {
     private int prioridade;
     private Estado estado;
     private int tempo;
+    private LinkedList<Integer> tempoIo;
 
     public Processo(int id, int duracao, int prioridade, Estado estado, int tempo) {
         this.id = id;
@@ -66,4 +67,11 @@ public class Processo {
         this.tempo = tempo;
     }
 
+    public LinkedList<Integer> getTempoIo() {
+        return tempoIo;
+    }
+
+    public void setTempoIo(LinkedList<Integer> tempoIo) {
+        this.tempoIo = tempoIo;
+    }
 }
