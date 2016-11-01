@@ -6,12 +6,14 @@ import Processos.Tipo;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Manipular {
+
     LinkedList<Processo> listaProcessos = new LinkedList();
 
     public void lerArquivo() {
@@ -33,7 +35,7 @@ public class Manipular {
                 prioridade = st.nextToken();                                    // Pega a prioridade e armazena na variável
                 tempo = st.nextToken();                                         // Pega o tempo de chegada e armazena na variável
 
-                LinkedList<Integer> listaES = new LinkedList<Integer>();        // Cria a lista de Entrada e Saída.
+                LinkedList<Integer> listaES = new LinkedList();        // Cria a lista de Entrada e Saída.
 
                 while (st.hasMoreTokens()) {
                     listaES.add(Integer.parseInt(st.nextToken()));              // Caso exista, adiciona os elementos na lista de Entrada e Saída
@@ -45,7 +47,9 @@ public class Manipular {
         } catch (IOException ex) {
             Logger.getLogger(Manipular.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //printarLinkedList();
+
+        Collections.sort(listaProcessos); // Ordena a lista por ordem de chegada
+
     }
 
     public void criaProcesso(String idStr, String duracaoStr, String prioridadeStr, String tempoStr, LinkedList<Integer> lista) {
@@ -54,17 +58,11 @@ public class Manipular {
         int prioridade = Integer.parseInt(prioridadeStr);
         int tempo = Integer.parseInt(tempoStr);
         Tipo tipo = Tipo.Usuario;
-        Processo p = new Processo(id, duracao, prioridade, Estado.Pronto, tempo, lista,tipo);
+        Processo p = new Processo(id, duracao, prioridade, Estado.Pronto, tempo, lista, tipo);
         this.listaProcessos.add(p);
     }
 
     public LinkedList<Processo> getLinkedList() {
         return this.listaProcessos;
-    }
-
-    public void printarLinkedList() {                                            // Imprime a lista de processos retiradas do arquivo
-        for (int i = 0; i < this.listaProcessos.size(); i++) {
-            System.out.println(this.listaProcessos.get(i).toString());
-        }
     }
 }

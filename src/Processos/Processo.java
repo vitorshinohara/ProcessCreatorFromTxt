@@ -11,7 +11,7 @@ import java.util.LinkedList;
  *
  * @author a1711199
  */
-public class Processo {
+public class Processo implements Comparable<Processo> {
 
     private int id;
     private int duracao;
@@ -19,7 +19,7 @@ public class Processo {
     private Estado estado;
     private int tempo;
     private Tipo tipo;
-    private LinkedList<Integer> listaES = new LinkedList<Integer>();
+    private LinkedList<Integer> listaES = new LinkedList<>();
 
     public Processo(int id, int duracao, int prioridade, Estado estado, int tempo, LinkedList<Integer> listaES, Tipo tipo) {
         this.id = id;
@@ -29,6 +29,10 @@ public class Processo {
         this.tempo = tempo;
         this.listaES = listaES;
         this.tipo = tipo;
+    }
+    
+    public Processo(){
+    
     }
 
     public int getId() {
@@ -92,6 +96,15 @@ public class Processo {
         return "Processo[" + "ID:" + id + ", Duracao:" + duracao + ", Prioridade:" + prioridade + ", Estado:" + estado + ", Tempo:" + tempo + ", Tipo:" + tipo + ", Lista de Entrada e Saída:" + listaES + ']';
     }
 
-    
-    
+    public int compareTo(Processo p) {
+        if (this.tempo > p.tempo) {
+            return 1;
+        }
+        if (this.tempo < p.tempo) {
+            return -1;
+        } else {
+            return 0;
+        }
+    }
+
 }

@@ -24,6 +24,6 @@ public class Main {
         //TempoTotal tempoTotal = new TempoTotal(manipular.getLinkedList());
         
         ShortestJobFirst sjf = new ShortestJobFirst();
-        sjf.start();
+        sjf.iniciar(manipular.getLinkedList());
     }
 }
