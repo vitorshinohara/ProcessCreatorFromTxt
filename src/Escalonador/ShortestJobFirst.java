@@ -16,7 +16,7 @@ import java.util.LinkedList;
 public class ShortestJobFirst {
 
     private boolean flag = false;
-
+    private int contador;
     LinkedList<Processo> listaProcesso = null;
     LinkedList<Processo> listaPronto = new LinkedList();
     LinkedList<Processo> listaBloqueado = new LinkedList();
@@ -24,6 +24,8 @@ public class ShortestJobFirst {
 
     public void iniciar(LinkedList<Processo> listaProcesso) {
         this.listaProcesso = listaProcesso; // Lista de processos retirados do arquivo ordenados por ordem de chegada.
+        Processo pSistema = new Processo();
+        pSistema.setTipo(Tipo.Sistema);
         escalonar();
     }
 
@@ -51,7 +53,7 @@ public class ShortestJobFirst {
             }
 
             tempo++;
-        } while (!(listaProcesso.isEmpty() && listaPronto.isEmpty())); // ERRADO AQUI <<<<<<<<<<<<<<<<<<<<<<<<<
+        } while (!(listaProcesso.isEmpty() && listaPronto.isEmpty()));
 
     }
 
