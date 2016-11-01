@@ -1,6 +1,4 @@
-
 package Escalonador;
-
 
 import Processos.Processo;
 import Processos.Tipo;
@@ -58,21 +56,29 @@ public class RoundRobin {
                 listaBloqueado.removeFirst();
             }
         }
-        
+
         while (listaPronto.getFirst().getTempo() > 0 && i < quantun) {
 
-            if (tempo == listaPronto.getFirst().getListaES().getFirst()) {
-                bloquear(listaPronto.getFirst());
+            if (!listaPronto.getFirst().getListaES().isEmpty()) {
+                if (listaPronto.getFirst().getListaES().getFirst() == tempo) {
+                    listaBloqueado.add(listaPronto.getFirst());
+                    listaPronto.removeFirst();
+                    break;
+                }
             }
 
             listaPronto.getFirst().setDuracao(listaPronto.getFirst().getDuracao() - 1);
-
-            verificaListaProcessos();
             tempo++;
+            verificaListaProcessos();
+
         }
 
-        listaPronto.addLast(listaPronto.getFirst());
-        listaPronto.removeFirst();
+        if (listaPronto.getFirst().getDuracao() <= 0) {
+            listaPronto.removeFirst();
+        } else {
+            listaPronto.addLast(listaPronto.getFirst());
+            listaPronto.removeFirst();
+        }
     }
 
     public void bloquear(Processo p) {
