@@ -17,28 +17,21 @@ public class Prioridade {
     int tempo = 0;
 
     public void inicializar(LinkedList<Processo> listaProcesso){
-        this.listaPronto = listaProcesso;
+        this.listaProcesso = listaProcesso;
         escalonar();
     }
     
     public void escalonar() {
         Processo processo = null;
 
-        do {
+        do {         
             verificaListaProcessos();
-
-            if (flag == false) {
-                if (!listaPronto.isEmpty()) {
-                    processo = prioridade();
-                    if (processo != null) {
-                        flag = true;
-                    }
-                }
+            if(flag){
+                processo = prioridade();
+                flag = false;
             }
-
-            while (flag) {
-                verificaListaProcessos();
-                System.out.println("[Executando] Processo " + processo.getId());
+            
+            while (!flag) {                
                 executar(processo);
                 tempo++;
             }
@@ -49,11 +42,11 @@ public class Prioridade {
     
     public Processo prioridade() {
         Processo p = listaPronto.get(0);
-        int menor = listaPronto.get(0).getPrioridade();
+        int maior = listaPronto.get(0).getPrioridade();
 
         for (int i = 0; i < this.listaPronto.size(); i++) {
-            if (listaPronto.get(i).getPrioridade()< p.getPrioridade()) {
-                menor = listaPronto.get(i).getDuracao();
+            if (listaPronto.get(i).getPrioridade() < p.getPrioridade()) {
+                maior = listaPronto.get(i).getDuracao();
                 p = listaPronto.get(i);
             }
         }
@@ -77,12 +70,12 @@ public class Prioridade {
         }
 
         if (p.getDuracao() > 0) {
-            flag = true;
+            flag = false;
             p.setDuracao(p.getDuracao() - 1);
             if (p.getDuracao() == 0) {
                 listaPronto.remove(p);
                 System.out.println("[Término] Processo " + p.getId());
-                flag = false;
+                flag = true;
             }
         }
     }
@@ -93,6 +86,7 @@ public class Prioridade {
                 listaPronto.add(listaProcesso.getFirst());
                 System.out.println("[Chegada] Processo " + listaProcesso.getFirst().getId());
                 listaProcesso.removeFirst();
+                flag = true;
             }
         }
     }
