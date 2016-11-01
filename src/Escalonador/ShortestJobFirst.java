@@ -55,11 +55,12 @@ public class ShortestJobFirst {
     }
 
     public Processo menorTempoExecucao() {
-        int duracao = 99999999;
-        Processo p = null;
+        Processo p = listaPronto.get(0);
+        int menor = listaPronto.get(0).getDuracao();
 
         for (int i = 0; i < this.listaPronto.size(); i++) {
-            if (listaPronto.get(i).getDuracao() < duracao) {
+            if (listaPronto.get(i).getDuracao() < menor) {
+                menor = listaPronto.get(i).getDuracao();
                 p = listaPronto.get(i);
             }
 
