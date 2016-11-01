@@ -7,7 +7,6 @@ package Escalonador;
 
 import Processos.Processo;
 import Processos.Tipo;
-import java.util.Collections;
 import java.util.LinkedList;
 
 /**
@@ -19,8 +18,8 @@ public class ShortestJobFirst {
     private boolean flag = false;
 
     LinkedList<Processo> listaProcesso = null;
-    LinkedList<Processo> listaPronto = new LinkedList<>();
-    LinkedList<Processo> listaBloqueado = new LinkedList<>();
+    LinkedList<Processo> listaPronto = new LinkedList();
+    LinkedList<Processo> listaBloqueado = new LinkedList();
     int tempo = 0;
 
     public void iniciar(LinkedList<Processo> listaProcesso) {

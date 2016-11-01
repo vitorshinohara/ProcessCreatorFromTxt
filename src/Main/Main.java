@@ -7,7 +7,6 @@ package Main;
 
 import Escalonador.ShortestJobFirst;
 import GerenciarArquivo.Manipular;
-import GerenciarArquivo.TempoTotal;
 
 /**
  *

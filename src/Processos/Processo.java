@@ -19,7 +19,7 @@ public class Processo implements Comparable<Processo> {
     private Estado estado;
     private int tempo;
     private Tipo tipo;
-    private LinkedList<Integer> listaES = new LinkedList<>();
+    private LinkedList<Integer> listaES = new LinkedList();
 
     public Processo(int id, int duracao, int prioridade, Estado estado, int tempo, LinkedList<Integer> listaES, Tipo tipo) {
         this.id = id;
