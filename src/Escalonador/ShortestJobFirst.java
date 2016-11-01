@@ -35,22 +35,23 @@ public class ShortestJobFirst {
             verificaListaProcessos();
 
             if (flag == false) {
-                processo = menorTempoExecucao();
-                if (processo != null) {
-                    flag = true;
+                if (!listaPronto.isEmpty()) {
+                    processo = menorTempoExecucao();
+                    if (processo != null) {
+                        flag = true;
+                    }
                 }
             }
 
             while (flag) {
                 verificaListaProcessos();
-                System.out.println("Executando processo " + processo.getId());
+                System.out.println("[Executando] Processo " + processo.getId());
                 executar(processo);
                 tempo++;
             }
 
-            // imprimir(listaPronto);
             tempo++;
-        } while (!(listaProcesso.isEmpty()) && !(listaPronto.isEmpty())); // ERRADO AQUI <<<<<<<<<<<<<<<<<<<<<<<<<
+        } while (!(listaProcesso.isEmpty() && listaPronto.isEmpty())); // ERRADO AQUI <<<<<<<<<<<<<<<<<<<<<<<<<
 
     }
 
@@ -59,7 +60,7 @@ public class ShortestJobFirst {
         int menor = listaPronto.get(0).getDuracao();
 
         for (int i = 0; i < this.listaPronto.size(); i++) {
-            if (listaPronto.get(i).getDuracao() < menor) {
+            if (listaPronto.get(i).getDuracao() < p.getDuracao()) {
                 menor = listaPronto.get(i).getDuracao();
                 p = listaPronto.get(i);
             }
@@ -90,7 +91,7 @@ public class ShortestJobFirst {
             p.setDuracao(p.getDuracao() - 1);
             if (p.getDuracao() == 0) {
                 listaPronto.remove(p);
-                System.out.println("Processo " + p.getId() + " terminou");
+                System.out.println("[Término] Processo " + p.getId());
                 flag = false;
             }
         }
@@ -101,7 +102,7 @@ public class ShortestJobFirst {
             if (listaProcesso.getFirst().getTempo() == tempo) {
 
                 listaPronto.add(listaProcesso.getFirst());
-                System.out.println("Processo " + listaProcesso.getFirst().getId() + " chegou.");
+                System.out.println("[Chegada] Processo " + listaProcesso.getFirst().getId());
                 listaProcesso.removeFirst();
 
             }
