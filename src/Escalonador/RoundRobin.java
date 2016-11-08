@@ -18,9 +18,10 @@ public class RoundRobin {
 
     public void inicializar(LinkedList<Processo> x) {
         this.listaProcesso = x;
-        Processo pSistema = new Processo();
-        pSistema.setTipo(Tipo.Sistema);
+//        Processo pSistema = new Processo();
+//        pSistema.setTipo(Tipo.Sistema);
 
+        escalonar(4);
     }
 
     public void escalonar(int quantun) {
@@ -31,6 +32,7 @@ public class RoundRobin {
             if (!listaPronto.isEmpty()) {
                 executar();
             }
+            tempo++;
 
         } while (!(listaProcesso.isEmpty() && listaPronto.isEmpty()));
 
@@ -41,7 +43,7 @@ public class RoundRobin {
             if (listaProcesso.getFirst().getTempo() == tempo) {
 
                 listaPronto.add(listaProcesso.getFirst());
-                System.out.println("[Chegada] Processo " + listaProcesso.getFirst().getId());
+                System.out.println("["+tempo+"][Chegada] Processo " + listaProcesso.getFirst().getId());
                 listaProcesso.removeFirst();
 
             }
@@ -71,6 +73,7 @@ public class RoundRobin {
             tempo++;
             i++;
             verificaListaProcessos();
+            System.out.println("Executando processo "+listaPronto.getFirst().getId());
 
         }
         i = 0;

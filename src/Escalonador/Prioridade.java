@@ -88,7 +88,7 @@ public class Prioridade {
             System.out.println("["+ tempo +"][Executando] Processo " + p.getId());
             if (p.getDuracao() == 0) {
                 listaPronto.remove(p);
-                System.out.println("["+ tempo +"][Término] Processo " + p.getId());
+                System.out.println("["+ (tempo +1)+"][Término] Processo " + p.getId());
                 flag = true;
             }
         }
