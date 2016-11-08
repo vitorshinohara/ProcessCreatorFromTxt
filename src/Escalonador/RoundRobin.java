@@ -69,10 +69,11 @@ public class RoundRobin {
 
             listaPronto.getFirst().setDuracao(listaPronto.getFirst().getDuracao() - 1);
             tempo++;
+            i++;
             verificaListaProcessos();
 
         }
-
+        i = 0;
         if (listaPronto.getFirst().getDuracao() <= 0) {
             listaPronto.removeFirst();
         } else {
