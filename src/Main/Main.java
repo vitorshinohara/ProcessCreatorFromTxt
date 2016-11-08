@@ -1,10 +1,7 @@
-
 package Main;
 
 import Escalonador.Prioridade;
-import Escalonador.ShortestJobFirst;
 import GerenciarArquivo.Manipular;
-
 /**
  *
  * @author a1711199
