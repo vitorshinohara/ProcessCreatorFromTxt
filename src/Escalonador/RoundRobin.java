@@ -34,7 +34,6 @@ public class RoundRobin {
             } else {
                 tempo++;
             }
-
         } while (!(listaProcesso.isEmpty() && listaPronto.isEmpty()));
 
     }

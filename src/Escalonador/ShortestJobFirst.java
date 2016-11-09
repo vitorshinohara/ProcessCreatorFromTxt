@@ -49,6 +49,7 @@ public class ShortestJobFirst {
 
             tempo++;
         } while (!(listaProcesso.isEmpty() && listaPronto.isEmpty()));
+        System.out.println("Fim do while");
 
     }
 

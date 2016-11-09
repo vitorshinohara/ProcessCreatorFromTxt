@@ -23,8 +23,6 @@ public class Prioridade {
 
     public void escalonar() {
         Processo processo = null;
-        Executar executar = new Executar();
-
         do {
             verificaListaProcessos();
             if (flag) {
@@ -37,8 +35,7 @@ public class Prioridade {
 
             while (!flag) {
                 if (processo != null) {
-                    //executar(processo);
-                    executar.executar(processo, this.listaBloqueado, this.listaPronto, this.tempo, this.flag);
+                    executar(processo);
                     tempo++;
                 }
                 verificaListaProcessos();
