@@ -70,6 +70,7 @@ public class ShortestRemainingTimeNext {
                 tempo++;
                 verificaListaProcessos();
                 System.out.println("[" + tempo + "][Executando] Processo do SISTEMA.");
+                
 
                 listaPronto.add(listaProcesso.getFirst());
                 System.out.println("[" + tempo + "] [Chegada] Processo " + listaProcesso.getFirst().getId());
