@@ -1,6 +1,5 @@
 package GerenciarArquivo;
 
-
 import Processos.Estado;
 import Processos.Processo;
 import Processos.Tipo;
@@ -17,7 +16,7 @@ public class Manipular {
 
     LinkedList<Processo> listaProcessos = new LinkedList();
 
-    public void lerArquivo() {
+    public void lerArquivo(String caminho) {
         String linha;                                                           // Cria variável para armazenar a linha do arquivo a ser lido
         String id;
         String duracao;
@@ -25,7 +24,7 @@ public class Manipular {
         String tempo;
 
         try {
-            FileReader reader = new FileReader("teste.txt");
+            FileReader reader = new FileReader(caminho);
             BufferedReader leitor = new BufferedReader(reader);
             StringTokenizer st = null;
 
