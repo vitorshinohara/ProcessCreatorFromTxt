@@ -5,7 +5,10 @@
  */
 package GUI;
 
+import Escalonador.Prioridade;
+import Escalonador.RoundRobin;
 import Escalonador.ShortestJobFirst;
+import Escalonador.ShortestRemainingTimeNext;
 import Processos.Processo;
 import java.util.LinkedList;
 import javax.swing.table.AbstractTableModel;
@@ -16,7 +19,7 @@ import javax.swing.table.AbstractTableModel;
  */
 public class TabelaTimeLine extends AbstractTableModel{
     private LinkedList<Processo> linhas = null;
-    
+
     @Override
     public int getRowCount() {
         return linhas.size();
@@ -75,15 +78,22 @@ public class TabelaTimeLine extends AbstractTableModel{
             case 1:{
                 ShortestJobFirst sjf = new ShortestJobFirst();
                 sjf.iniciar(listaProcesso);
+                //fireTableRowsInserted(algoritmo, algoritmo);
             }
             case 2:{
-                
+                Prioridade prio = new Prioridade();
+                prio.inicializar(listaProcesso);
+                //fireTableRowsInserted(algoritmo, algoritmo);
             }
             case 3:{
-                
+                RoundRobin rr = new RoundRobin();
+                rr.inicializar(listaProcesso);
+                //fireTableRowsInserted(algoritmo, algoritmo);
             }
             case 4:{
-                
+                ShortestRemainingTimeNext strn = new ShortestRemainingTimeNext();
+                strn.iniciar(listaProcesso);
+                //fireTableRowsInserted(algoritmo, algoritmo);
             }
         }
     }

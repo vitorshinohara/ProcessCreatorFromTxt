@@ -5,10 +5,6 @@
  */
 package GUI;
 
-import Escalonador.Prioridade;
-import Escalonador.RoundRobin;
-import Escalonador.ShortestJobFirst;
-import Escalonador.ShortestRemainingTimeNext;
 import GerenciarArquivo.Manipular;
 import Processos.Processo;
 import java.awt.Dimension;
@@ -31,6 +27,8 @@ public class TelaEscalonador extends javax.swing.JFrame {
     Dimension tamTela = kit.getScreenSize();
 
     Manipular manipular = null;
+    
+    public TabelaTimeLine modeloTabela = new TabelaTimeLine();
 
     /**
      * Creates new form TelaEscalonador
@@ -63,6 +61,8 @@ public class TelaEscalonador extends javax.swing.JFrame {
         prioridadeButton = new javax.swing.JButton();
         roundinRobinButton = new javax.swing.JButton();
         srtnButton = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tebelaTimeLine = new javax.swing.JTable();
 
         javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
         jDialog1.getContentPane().setLayout(jDialog1Layout);
@@ -164,6 +164,12 @@ public class TelaEscalonador extends javax.swing.JFrame {
             }
         });
 
+        tebelaTimeLine.setModel(modeloTabela);
+        tebelaTimeLine.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        tebelaTimeLine.setGridColor(new java.awt.Color(247, 247, 247));
+        tebelaTimeLine.setSelectionBackground(new java.awt.Color(70, 66, 65));
+        jScrollPane1.setViewportView(tebelaTimeLine);
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -190,7 +196,8 @@ public class TelaEscalonador extends javax.swing.JFrame {
                                 .addComponent(roundinRobinButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(srtnButton, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 17, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 773, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -215,6 +222,8 @@ public class TelaEscalonador extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(roundinRobinButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(srtnButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -222,10 +231,7 @@ public class TelaEscalonador extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -239,9 +245,8 @@ public class TelaEscalonador extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void roundinRobinButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_roundinRobinButtonActionPerformed
-        RoundRobin rr = new RoundRobin();
         if(manipular != null){
-            rr.inicializar(manipular.getLinkedList());
+            modeloTabela.adicionar(processo, 3, manipular.getLinkedList());
         }
         else{
             JOptionPane.showMessageDialog(null, "Selecione o arquivo!");
@@ -249,9 +254,8 @@ public class TelaEscalonador extends javax.swing.JFrame {
     }//GEN-LAST:event_roundinRobinButtonActionPerformed
 
     private void prioridadeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prioridadeButtonActionPerformed
-        Prioridade prio = new Prioridade();
         if(manipular != null){
-            prio.inicializar(manipular.getLinkedList());
+            modeloTabela.adicionar(processo, 2, manipular.getLinkedList());
         }
         else{
             JOptionPane.showMessageDialog(null, "Selecione o arquivo!");
@@ -260,7 +264,7 @@ public class TelaEscalonador extends javax.swing.JFrame {
 
     private void sjfButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sjfButtonActionPerformed
         if(manipular != null){
-            
+            modeloTabela.adicionar(processo, 1, manipular.getLinkedList());
         }
         else{
             JOptionPane.showMessageDialog(null, "Selecione o arquivo!");
@@ -282,9 +286,8 @@ public class TelaEscalonador extends javax.swing.JFrame {
     }//GEN-LAST:event_procurarActionPerformed
 
     private void srtnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_srtnButtonActionPerformed
-        ShortestRemainingTimeNext strn = new ShortestRemainingTimeNext();
         if(manipular != null){
-            strn.iniciar(manipular.getLinkedList());
+            modeloTabela.adicionar(processo, 4, manipular.getLinkedList());
         }
         else{
             JOptionPane.showMessageDialog(null, "Selecione o arquivo!");
@@ -336,10 +339,12 @@ public class TelaEscalonador extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton prioridadeButton;
     private javax.swing.JButton procurar;
     private javax.swing.JButton roundinRobinButton;
     private javax.swing.JButton sjfButton;
     private javax.swing.JButton srtnButton;
+    private javax.swing.JTable tebelaTimeLine;
     // End of variables declaration//GEN-END:variables
 }
