@@ -14,7 +14,7 @@ public class Prioridade {
     LinkedList<Processo> listaPronto = new LinkedList();
     LinkedList<Processo> listaBloqueado = new LinkedList();
     private boolean flag = true;
-    int tempo = -1;
+    int tempo = 0;
 
     public void inicializar(LinkedList<Processo> listaProcesso) {
         this.listaProcesso = listaProcesso;
@@ -23,7 +23,6 @@ public class Prioridade {
 
     public void escalonar() {
         Processo processo = null;
-            tempo++;
 
         do {
             verificaListaProcessos();
@@ -38,12 +37,12 @@ public class Prioridade {
             while (!flag) {
                 if (processo != null) {
                     executar(processo);
-//                    System.out.println("Executando processo");
                     tempo++;
                 }
                 verificaListaProcessos();
             }
 
+        tempo++;
         } while (!(listaProcesso.isEmpty() && listaPronto.isEmpty()));
         System.out.println("Fim do while");
     }
@@ -52,10 +51,9 @@ public class Prioridade {
 
         if (!listaPronto.isEmpty()) {
             Processo p = listaPronto.get(0);
-            
 
             for (int i = 0; i < this.listaPronto.size(); i++) {
-                if (listaPronto.get(i).getPrioridade() < p.getPrioridade()) {
+                if (listaPronto.get(i).getPrioridade() <= p.getPrioridade()) {
                     p = listaPronto.get(i);
                 }
             }
@@ -85,10 +83,10 @@ public class Prioridade {
 
         if (p.getDuracao() > 0) {
             p.setDuracao(p.getDuracao() - 1);
-            System.out.println("["+ tempo +"][Executando] Processo " + p.getId());
+            System.out.println("[" + tempo + "][Executando] Processo " + p.getId());
             if (p.getDuracao() == 0) {
                 listaPronto.remove(p);
-                System.out.println("["+ (tempo +1)+"][Término] Processo " + p.getId());
+                System.out.println("[" + (tempo + 1) + "][Término] Processo " + p.getId());
                 flag = true;
             }
         }
@@ -98,7 +96,7 @@ public class Prioridade {
         if (!listaProcesso.isEmpty()) {
             if (listaProcesso.getFirst().getTempo() == tempo) {
                 listaPronto.add(listaProcesso.getFirst());
-                System.out.println("["+ tempo +"][Chegada] Processo " + listaProcesso.getFirst().getId());
+                System.out.println("[" + tempo + "][Chegada] Processo " + listaProcesso.getFirst().getId());
                 listaProcesso.removeFirst();
                 flag = true;
             }
