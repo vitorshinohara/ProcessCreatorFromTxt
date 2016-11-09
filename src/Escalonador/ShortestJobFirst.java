@@ -85,6 +85,7 @@ public class ShortestJobFirst {
                 for (int i = listaBloqueado.size(); i > 0; i--) {
                     listaPronto.add(listaBloqueado.getFirst());
                     listaBloqueado.removeFirst();
+                    flag = false;
                 }
             }
 
