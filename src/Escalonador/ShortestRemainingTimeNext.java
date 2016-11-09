@@ -97,12 +97,11 @@ public class ShortestRemainingTimeNext {
             System.out.println("[" + tempo + "] [Executando] Processo " + p.getId());
             p.setDuracao(p.getDuracao() - 1);
 
-            if (p.getDuracao() == 0) {
-                System.out.println("[" + tempo + "] [Termino] Processo " + p.getId());
-                listaPronto.remove(p);
-                flag = false;
-            }
+        } else if (p.getDuracao() == 0) {
+            System.out.println("[" + tempo + "] [Termino] Processo " + p.getId());
+            listaPronto.remove(p);
+            flag = false;
+            tempo--;
         }
-
     }
 }

@@ -29,10 +29,10 @@ public class ShortestJobFirst {
         do {
 
             verificaListaProcessos();
-            if(flag == false && tempo %10 == 0){
+            if (flag == false && tempo % 10 == 0) {
                 executar(pSistema);
             }
-            
+
             if (flag == false) {
                 if (!listaPronto.isEmpty()) {
                     p_Executar = ShortestJob();
@@ -80,7 +80,7 @@ public class ShortestJobFirst {
     public void executar(Processo p) {
 
         if (p.getTipo().equals(Tipo.Sistema)) {
-            System.out.println("["+tempo+"][SISTEMA] Executando processo do sistema");
+            System.out.println("[" + tempo + "] [SISTEMA] Executando processo do sistema");
             if (!listaBloqueado.isEmpty()) {
                 for (int i = listaBloqueado.size(); i > 0; i--) {
                     listaPronto.add(listaBloqueado.getFirst());
@@ -96,12 +96,11 @@ public class ShortestJobFirst {
         } else if (p.getDuracao() > 0) {
             p.setDuracao(p.getDuracao() - 1);
 
-            if (p.getDuracao() == 0) {
-                System.out.println("[" + tempo + "] [Termino] Processo " + p.getId());
-                listaPronto.remove(p);
-                flag = false;
-            }
+        } else if (p.getDuracao() == 0) {
+            System.out.println("[" + tempo + "] [Termino] Processo " + p.getId());
+            listaPronto.remove(p);
+            flag = false;
+            tempo--;
         }
-
     }
 }
