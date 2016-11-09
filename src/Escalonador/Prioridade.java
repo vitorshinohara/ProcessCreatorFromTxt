@@ -85,6 +85,8 @@ public class Prioridade {
         } else if (!p.getListaES().isEmpty()) {
             for (int i = 0; i < p.getListaES().size(); i++) {
                 if (tempo == p.getListaES().get(i)) {
+                    System.out.println("[" + tempo + "] [Bloqueado] Processo " + p.getId());
+                    
                     listaBloqueado.add(p);
                     listaPronto.remove(p);
                     flag = true;
@@ -112,7 +114,7 @@ public class Prioridade {
             if (listaProcesso.getFirst().getTempo() == tempo) {
                 listaPronto.add(listaProcesso.getFirst());
                 System.out.println("[" + tempo + "][Chegada] Processo " + listaProcesso.getFirst().getId());
-                DadosGUI dadosGUI = new DadosGUI(listaPronto.getFirst().getId(),tempo,"Chegada",listaPronto.getFirst().getPrioridade(),listaPronto.getFirst().getDuracao(),"Usuário");
+                DadosGUI dadosGUI = new DadosGUI(listaProcesso.getFirst().getId(),tempo,"Chegada",listaProcesso.getFirst().getPrioridade(),listaProcesso.getFirst().getDuracao(),"Usuário");
                 listaProcesso.removeFirst();
                 flag = true;
             }

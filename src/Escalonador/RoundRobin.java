@@ -45,6 +45,8 @@ public class RoundRobin {
 
                 listaPronto.add(listaProcesso.getFirst());
                 System.out.println("[" + tempo + "][Chegada] Processo " + listaProcesso.getFirst().getId());
+                DadosGUI dadosGUI = new DadosGUI(listaProcesso.getFirst().getId(), tempo, "Chegada", listaProcesso.getFirst().getPrioridade(), listaPronto.getFirst().getDuracao(), "Usuário");
+
                 listaProcesso.removeFirst();
 
             }
@@ -61,12 +63,13 @@ public class RoundRobin {
                 tempo++;
                 verificaListaProcessos();
                 System.out.println("[" + tempo + "][Executando] Processo do SISTEMA.");
-                
+                DadosGUI dados = new DadosGUI(this.tempo, "Executando", "Sistema");
+
                 for (int j = listaBloqueado.size(); j > 0; j--) {
                     listaPronto.add(listaBloqueado.getFirst());
                     listaBloqueado.removeFirst();
                 }
-                
+
                 listaPronto.add(listaPronto.getFirst());
                 listaPronto.removeFirst();
 
@@ -99,6 +102,7 @@ public class RoundRobin {
             listaPronto.getFirst().setDuracao(listaPronto.getFirst().getDuracao() - 1);
             i++;
             System.out.println("[" + tempo + "][Executando] Processo " + listaPronto.getFirst().getId());
+            DadosGUI dados = new DadosGUI(listaPronto.getFirst().getId(), tempo, "Executando", listaPronto.getFirst().getPrioridade(), listaPronto.getFirst().getDuracao(), "Usuário");
             tempo++;
             verificaListaProcessos();
         }

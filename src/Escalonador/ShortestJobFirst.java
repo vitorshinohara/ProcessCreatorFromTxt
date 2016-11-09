@@ -41,6 +41,7 @@ public class ShortestJobFirst {
                     while (flag) {
                         tempo++;
                         System.out.println("[" + tempo + "] [Executando] processo " + p_Executar.getId());
+                        DadosGUI dados = new DadosGUI(p_Executar.getId(),tempo,"Executando",p_Executar.getPrioridade(),p_Executar.getDuracao(),"Usuário");
                         executar(p_Executar);
                         verificaListaProcessos();
                     }
@@ -81,6 +82,7 @@ public class ShortestJobFirst {
 
         if (p.getTipo().equals(Tipo.Sistema)) {
             System.out.println("[" + tempo + "] [SISTEMA] Executando processo do sistema");
+            DadosGUI dados = new DadosGUI(this.tempo,"Executando","Sistema");
             tempo++;
             verificaListaProcessos();
             
