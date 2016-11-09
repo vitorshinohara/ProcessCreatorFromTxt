@@ -3,6 +3,7 @@ package Main;
 import Escalonador.Prioridade;
 import Escalonador.RoundRobin;
 import Escalonador.ShortestJobFirst;
+import Escalonador.ShortestRemainingTimeNext;
 import GerenciarArquivo.Manipular;
 
 /**
@@ -25,7 +26,10 @@ public class Main {
 //        Prioridade prio = new Prioridade();
 //        prio.inicializar(manipular.getLinkedList());
 
-        RoundRobin rr = new RoundRobin();
-        rr.inicializar(manipular.getLinkedList());
+//        RoundRobin rr = new RoundRobin();
+//        rr.inicializar(manipular.getLinkedList());
+
+        ShortestRemainingTimeNext srtn = new ShortestRemainingTimeNext();
+        srtn.iniciar(manipular.getLinkedList());
     }
 }
