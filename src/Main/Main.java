@@ -26,10 +26,10 @@ public class Main {
 //        Prioridade prio = new Prioridade();
 //        prio.inicializar(manipular.getLinkedList());
 
-//        RoundRobin rr = new RoundRobin();
-//        rr.inicializar(manipular.getLinkedList());
+        RoundRobin rr = new RoundRobin();
+        rr.inicializar(manipular.getLinkedList());
 
-        ShortestRemainingTimeNext srtn = new ShortestRemainingTimeNext();
-        srtn.iniciar(manipular.getLinkedList());
+//        ShortestRemainingTimeNext srtn = new ShortestRemainingTimeNext();
+//        srtn.iniciar(manipular.getLinkedList());
     }
 }

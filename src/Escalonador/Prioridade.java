@@ -71,16 +71,15 @@ public class Prioridade {
                     listaBloqueado.removeFirst();
                 }
             }
-        }
-
-        if (!p.getListaES().isEmpty()) {
+            
+        } else if (!p.getListaES().isEmpty()) {
             if (tempo == p.getListaES().getFirst()) {
                 listaBloqueado.add(p);
                 listaPronto.remove(p);
+                flag = true;
             }
-        }
-
-        if (p.getDuracao() > 0) {
+            
+        } else if (p.getDuracao() > 0) {
             p.setDuracao(p.getDuracao() - 1);
             System.out.println("[" + tempo + "][Executando] Processo " + p.getId());
             if (p.getDuracao() == 0) {
