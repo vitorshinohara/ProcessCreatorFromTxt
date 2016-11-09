@@ -23,6 +23,7 @@ public class Prioridade {
 
     public void escalonar() {
         Processo processo = null;
+        Executar executar = new Executar();
 
         do {
             verificaListaProcessos();
@@ -36,13 +37,14 @@ public class Prioridade {
 
             while (!flag) {
                 if (processo != null) {
-                    executar(processo);
+                    //executar(processo);
+                    executar.executar(processo, this.listaBloqueado, this.listaPronto, this.tempo, this.flag);
                     tempo++;
                 }
                 verificaListaProcessos();
             }
 
-        tempo++;
+            tempo++;
         } while (!(listaProcesso.isEmpty() && listaPronto.isEmpty()));
         System.out.println("Fim do while");
     }

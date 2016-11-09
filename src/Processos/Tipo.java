@@ -1,6 +1,4 @@
-
 package Processos;
-
 
 /**
  *
@@ -19,7 +17,4 @@ public enum Tipo {
     public String toString() {
         return texto;
     }
-    
-    
-    
 }

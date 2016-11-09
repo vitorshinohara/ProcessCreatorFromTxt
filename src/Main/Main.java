@@ -2,7 +2,6 @@ package Main;
 
 import Escalonador.Prioridade;
 import Escalonador.RoundRobin;
-import Escalonador.ShortestJobFirst;
 import GerenciarArquivo.Manipular;
 /**
  *
@@ -18,14 +17,14 @@ public class Main {
         manipular.lerArquivo();
         //TempoTotal tempoTotal = new TempoTotal(manipular.getLinkedList());
         
-        ShortestJobFirst sjf = new ShortestJobFirst();
-        sjf.iniciar(manipular.getLinkedList());
+        //ShortestJobFirst sjf = new ShortestJobFirst();
+        //sjf.iniciar(manipular.getLinkedList());
 //        
-//        Prioridade prio = new Prioridade();
-//        prio.inicializar(manipular.getLinkedList());
+        Prioridade prio = new Prioridade();
+        prio.inicializar(manipular.getLinkedList());
 
-        RoundRobin rr = new RoundRobin();
-        rr.inicializar(manipular.getLinkedList());
+//        RoundRobin rr = new RoundRobin();
+//        rr.inicializar(manipular.getLinkedList());
         
     }
 }

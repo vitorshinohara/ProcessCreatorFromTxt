@@ -15,10 +15,14 @@ import java.util.LinkedList;
  */
 public class Executar {
     public void executar(Processo p, LinkedList<Processo> listaBloqueado, LinkedList<Processo> listaPronto, int tempo, boolean flag) {
-        if (p.getTipo() == Tipo.Sistema) {
-            for (int i = listaBloqueado.size(); i > 0; i--) {
-                listaPronto.add(listaBloqueado.getFirst());
-                listaBloqueado.removeFirst();
+        System.out.println("Entrei!");
+        if (p.getTipo().equals(Tipo.Sistema)) {
+            if (!listaBloqueado.isEmpty()) {
+                for (int i = listaBloqueado.size(); i > 0; i--) {
+                    listaPronto.add(listaBloqueado.getFirst());
+                    listaBloqueado.removeFirst();
+                    System.out.println("Entrei!");
+                }
             }
         }
 
@@ -30,12 +34,12 @@ public class Executar {
         }
 
         if (p.getDuracao() > 0) {
-            flag = true;
             p.setDuracao(p.getDuracao() - 1);
+            System.out.println("[" + tempo + "][Executando] Processo " + p.getId());
             if (p.getDuracao() == 0) {
                 listaPronto.remove(p);
-                System.out.println("[Término] Processo " + p.getId());
-                flag = false;
+                System.out.println("[" + (tempo + 1) + "][Término] Processo " + p.getId());
+                flag = true;
             }
         }
     }
