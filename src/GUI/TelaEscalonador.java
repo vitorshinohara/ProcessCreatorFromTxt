@@ -8,6 +8,7 @@ package GUI;
 import Escalonador.Prioridade;
 import Escalonador.RoundRobin;
 import Escalonador.ShortestJobFirst;
+import Escalonador.ShortestRemainingTimeNext;
 import GerenciarArquivo.Manipular;
 import Processos.Processo;
 import java.awt.Dimension;
@@ -25,7 +26,7 @@ public class TelaEscalonador extends javax.swing.JFrame {
     String caminho = "";
     File file = null;
     Processo processo = null;
-    
+
     Toolkit kit = Toolkit.getDefaultToolkit();  
     Dimension tamTela = kit.getScreenSize();
 
@@ -36,7 +37,7 @@ public class TelaEscalonador extends javax.swing.JFrame {
      */
     public TelaEscalonador() {
         initComponents();
-        this.setBounds((tamTela.width-491)/2, (tamTela.height-301)/2, 491, 301);
+        this.setLocation((tamTela.width-443)/2, (tamTela.height-277)/2);
     }
 
     /**
@@ -50,7 +51,6 @@ public class TelaEscalonador extends javax.swing.JFrame {
 
         jDialog1 = new javax.swing.JDialog();
         jFrame1 = new javax.swing.JFrame();
-        jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -59,9 +59,10 @@ public class TelaEscalonador extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         caminhoArquivo = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        sjfButtom = new javax.swing.JButton();
-        prioridadeButtom = new javax.swing.JButton();
-        roundinRobinButtom = new javax.swing.JButton();
+        sjfButton = new javax.swing.JButton();
+        prioridadeButton = new javax.swing.JButton();
+        roundinRobinButton = new javax.swing.JButton();
+        srtnButton = new javax.swing.JButton();
 
         javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
         jDialog1.getContentPane().setLayout(jDialog1Layout);
@@ -87,7 +88,7 @@ public class TelaEscalonador extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel3.setBackground(new java.awt.Color(194, 185, 177));
+        jPanel3.setBackground(new java.awt.Color(173, 169, 164));
 
         jLabel2.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
         jLabel2.setText("Busca de Arquivo de Processos:");
@@ -125,33 +126,41 @@ public class TelaEscalonador extends javax.swing.JFrame {
 
         jLabel4.setText("Selecione o algoritmo de escalonamento:");
 
-        sjfButtom.setText("SJF");
-        sjfButtom.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        sjfButtom.setMaximumSize(new java.awt.Dimension(0, 40));
-        sjfButtom.setMinimumSize(new java.awt.Dimension(0, 40));
-        sjfButtom.addActionListener(new java.awt.event.ActionListener() {
+        sjfButton.setText("SJF");
+        sjfButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        sjfButton.setMaximumSize(new java.awt.Dimension(0, 40));
+        sjfButton.setMinimumSize(new java.awt.Dimension(0, 40));
+        sjfButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                sjfButtomActionPerformed(evt);
+                sjfButtonActionPerformed(evt);
             }
         });
 
-        prioridadeButtom.setText("Prioridade");
-        prioridadeButtom.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        prioridadeButtom.setMaximumSize(new java.awt.Dimension(0, 40));
-        prioridadeButtom.setMinimumSize(new java.awt.Dimension(0, 40));
-        prioridadeButtom.addActionListener(new java.awt.event.ActionListener() {
+        prioridadeButton.setText("Prioridade");
+        prioridadeButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        prioridadeButton.setMaximumSize(new java.awt.Dimension(0, 40));
+        prioridadeButton.setMinimumSize(new java.awt.Dimension(0, 40));
+        prioridadeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                prioridadeButtomActionPerformed(evt);
+                prioridadeButtonActionPerformed(evt);
             }
         });
 
-        roundinRobinButtom.setText("Roundin Robin");
-        roundinRobinButtom.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        roundinRobinButtom.setMaximumSize(new java.awt.Dimension(0, 40));
-        roundinRobinButtom.setMinimumSize(new java.awt.Dimension(0, 40));
-        roundinRobinButtom.addActionListener(new java.awt.event.ActionListener() {
+        roundinRobinButton.setText("Roundin Robin");
+        roundinRobinButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        roundinRobinButton.setMaximumSize(new java.awt.Dimension(0, 40));
+        roundinRobinButton.setMinimumSize(new java.awt.Dimension(0, 40));
+        roundinRobinButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                roundinRobinButtomActionPerformed(evt);
+                roundinRobinButtonActionPerformed(evt);
+            }
+        });
+
+        srtnButton.setText("SRTN");
+        srtnButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        srtnButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                srtnButtonActionPerformed(evt);
             }
         });
 
@@ -174,12 +183,14 @@ public class TelaEscalonador extends javax.swing.JFrame {
                             .addComponent(jLabel3)
                             .addComponent(jLabel4)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(sjfButtom, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(sjfButton, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(prioridadeButtom, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(prioridadeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(roundinRobinButtom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 149, Short.MAX_VALUE)))
+                                .addComponent(roundinRobinButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(srtnButton, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 17, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -199,26 +210,11 @@ public class TelaEscalonador extends javax.swing.JFrame {
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(sjfButtom, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
-                    .addComponent(prioridadeButtom, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(roundinRobinButtom, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(sjfButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(prioridadeButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(roundinRobinButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(srtnButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -226,15 +222,50 @@ public class TelaEscalonador extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void roundinRobinButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_roundinRobinButtonActionPerformed
+        RoundRobin rr = new RoundRobin();
+        if(manipular != null){
+            rr.inicializar(manipular.getLinkedList());
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Selecione o arquivo!");
+        }
+    }//GEN-LAST:event_roundinRobinButtonActionPerformed
+
+    private void prioridadeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prioridadeButtonActionPerformed
+        Prioridade prio = new Prioridade();
+        if(manipular != null){
+            prio.inicializar(manipular.getLinkedList());
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Selecione o arquivo!");
+        }
+    }//GEN-LAST:event_prioridadeButtonActionPerformed
+
+    private void sjfButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sjfButtonActionPerformed
+        if(manipular != null){
+            
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Selecione o arquivo!");
+        }
+    }//GEN-LAST:event_sjfButtonActionPerformed
 
     private void procurarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_procurarActionPerformed
         int retorno = chooser.showSaveDialog(null);
@@ -245,40 +276,20 @@ public class TelaEscalonador extends javax.swing.JFrame {
 
         if(caminho != null){
             caminhoArquivo.setText(caminho);
+            manipular = new Manipular();
+            manipular.lerArquivo(caminho);
         }
-        manipular = new Manipular();
-        manipular.lerArquivo(caminho);
     }//GEN-LAST:event_procurarActionPerformed
 
-    private void sjfButtomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sjfButtomActionPerformed
-        ShortestJobFirst sjf = new ShortestJobFirst();
+    private void srtnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_srtnButtonActionPerformed
+        ShortestRemainingTimeNext strn = new ShortestRemainingTimeNext();
         if(manipular != null){
-            sjf.iniciar(manipular.getLinkedList());
+            strn.iniciar(manipular.getLinkedList());
         }
         else{
             JOptionPane.showMessageDialog(null, "Selecione o arquivo!");
         }
-    }//GEN-LAST:event_sjfButtomActionPerformed
-
-    private void prioridadeButtomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prioridadeButtomActionPerformed
-        Prioridade prio = new Prioridade();
-        if(manipular != null){
-            prio.inicializar(manipular.getLinkedList());
-        }
-        else{
-            JOptionPane.showMessageDialog(null, "Selecione o arquivo!");
-        }
-    }//GEN-LAST:event_prioridadeButtomActionPerformed
-
-    private void roundinRobinButtomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_roundinRobinButtomActionPerformed
-        RoundRobin rr = new RoundRobin();
-        if(manipular != null){
-            rr.inicializar(manipular.getLinkedList());
-        }
-        else{
-            JOptionPane.showMessageDialog(null, "Selecione o arquivo!");
-        }
-    }//GEN-LAST:event_roundinRobinButtomActionPerformed
+    }//GEN-LAST:event_srtnButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -323,12 +334,12 @@ public class TelaEscalonador extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JButton prioridadeButtom;
+    private javax.swing.JButton prioridadeButton;
     private javax.swing.JButton procurar;
-    private javax.swing.JButton roundinRobinButtom;
-    private javax.swing.JButton sjfButtom;
+    private javax.swing.JButton roundinRobinButton;
+    private javax.swing.JButton sjfButton;
+    private javax.swing.JButton srtnButton;
     // End of variables declaration//GEN-END:variables
 }
