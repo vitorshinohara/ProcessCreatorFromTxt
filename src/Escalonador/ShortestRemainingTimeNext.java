@@ -27,7 +27,6 @@ public class ShortestRemainingTimeNext {
         Processo p_Executar;
 
         do {
-
             verificaListaProcessos();
             if (flag == false && tempo % 10 == 0) {
                 executar(pSistema);
@@ -67,6 +66,10 @@ public class ShortestRemainingTimeNext {
     public void verificaListaProcessos() {
         if (!listaProcesso.isEmpty()) {
             if (listaProcesso.getFirst().getTempo() == tempo) {
+                
+                tempo++;
+                verificaListaProcessos();
+                System.out.println("[" + tempo + "][Executando] Processo do SISTEMA.");
 
                 listaPronto.add(listaProcesso.getFirst());
                 System.out.println("[" + tempo + "] [Chegada] Processo " + listaProcesso.getFirst().getId());
@@ -90,9 +93,11 @@ public class ShortestRemainingTimeNext {
             }
 
         } else if (!p.getListaES().isEmpty()) {
-            if (tempo == p.getListaES().getFirst()) {
-                listaBloqueado.add(p);
-                listaPronto.remove(p);
+            for (int i = 0; i < p.getListaES().size(); i++) {
+                if (tempo == p.getListaES().get(i)) {
+                    listaBloqueado.add(p);
+                    listaPronto.remove(p);
+                }
             }
         } else if (p.getDuracao() > 0) {
             System.out.println("[" + tempo + "] [Executando] Processo " + p.getId());

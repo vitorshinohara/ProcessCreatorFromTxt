@@ -81,19 +81,27 @@ public class ShortestJobFirst {
 
         if (p.getTipo().equals(Tipo.Sistema)) {
             System.out.println("[" + tempo + "] [SISTEMA] Executando processo do sistema");
+            tempo++;
+            verificaListaProcessos();
+            
             if (!listaBloqueado.isEmpty()) {
                 for (int i = listaBloqueado.size(); i > 0; i--) {
                     listaPronto.add(listaBloqueado.getFirst());
                     listaBloqueado.removeFirst();
                     flag = false;
                 }
+                
             }
 
         } else if (!p.getListaES().isEmpty()) {
-            if (tempo == p.getListaES().getFirst()) {
-                listaBloqueado.add(p);
-                listaPronto.remove(p);
+            for (int i = 0; i < p.getListaES().size() ; i++) {
+                
+                if (tempo == p.getListaES().get(i)) {
+                    listaBloqueado.add(p);
+                    listaPronto.remove(p);
+                }
             }
+
         } else if (p.getDuracao() > 0) {
             p.setDuracao(p.getDuracao() - 1);
 

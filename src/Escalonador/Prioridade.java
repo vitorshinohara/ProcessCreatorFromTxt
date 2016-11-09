@@ -65,21 +65,32 @@ public class Prioridade {
 
     public void executar(Processo p) {
         if (p.getTipo().equals(Tipo.Sistema)) {
+
+            tempo++;
+            verificaListaProcessos();
+            System.out.println("[" + tempo + "][Executando] Processo do SISTEMA.");
+            
             if (!listaBloqueado.isEmpty()) {
                 for (int i = listaBloqueado.size(); i > 0; i--) {
                     listaPronto.add(listaBloqueado.getFirst());
                     listaBloqueado.removeFirst();
                     flag = true;
                 }
+
+                tempo++;
+                verificaListaProcessos();
             }
-            
+
         } else if (!p.getListaES().isEmpty()) {
-            if (tempo == p.getListaES().getFirst()) {
-                listaBloqueado.add(p);
-                listaPronto.remove(p);
-                flag = true;
+            for (int i = 0; i < p.getListaES().size(); i++) {
+                if (tempo == p.getListaES().get(i)) {
+                    listaBloqueado.add(p);
+                    listaPronto.remove(p);
+                    flag = true;
+                    p.getListaES().remove(i);
+                }
             }
-            
+
         } else if (p.getDuracao() > 0) {
             p.setDuracao(p.getDuracao() - 1);
             System.out.println("[" + tempo + "][Executando] Processo " + p.getId());
