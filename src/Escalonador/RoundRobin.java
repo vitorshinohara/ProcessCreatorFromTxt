@@ -45,7 +45,7 @@ public class RoundRobin {
 
                 listaPronto.add(listaProcesso.getFirst());
                 System.out.println("[" + tempo + "][Chegada] Processo " + listaProcesso.getFirst().getId());
-                DadosGUI dadosGUI = new DadosGUI(listaProcesso.getFirst().getId(), tempo, "Chegada", listaProcesso.getFirst().getPrioridade(), listaPronto.getFirst().getDuracao(), "Usuário");
+                DadosGUI dadosGUI = new DadosGUI(listaProcesso.getFirst().getId(), tempo, "Chegada", listaProcesso.getFirst().getPrioridade(), listaProcesso.getFirst().getDuracao(), "Usuário");
 
                 listaProcesso.removeFirst();
 
@@ -82,6 +82,8 @@ public class RoundRobin {
                 for (int j = 0; j < listaPronto.getFirst().getListaES().size(); j++) {
                     if (listaPronto.getFirst().getListaES().get(j) == tempo) {
                         System.out.println("[" + tempo + "] [Bloqueado] Processo " + listaPronto.getFirst().getId());
+                        DadosGUI dadosGUI = new DadosGUI(listaPronto.getFirst().getId(), tempo, "Bloqueado", listaPronto.getFirst().getPrioridade(), listaPronto.getFirst().getDuracao(), "Usuário");
+
                         listaBloqueado.add(listaPronto.getFirst());
                         listaPronto.removeFirst();
                         ES = true;
@@ -111,6 +113,8 @@ public class RoundRobin {
 
         if (listaPronto.getFirst().getDuracao() == 0 && listaPronto.getFirst().getTipo().equals(Tipo.Usuario)) {
             System.out.println("[" + tempo + "][Termino] Processo " + listaPronto.getFirst().getId());
+            DadosGUI dadosGUI = new DadosGUI(listaPronto.getFirst().getId(), tempo, "Término", listaPronto.getFirst().getPrioridade(), listaPronto.getFirst().getDuracao(), "Usuário");
+
             listaPronto.removeFirst();
 
         } else {

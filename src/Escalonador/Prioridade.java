@@ -86,6 +86,7 @@ public class Prioridade {
             for (int i = 0; i < p.getListaES().size(); i++) {
                 if (tempo == p.getListaES().get(i)) {
                     System.out.println("[" + tempo + "] [Bloqueado] Processo " + p.getId());
+                    DadosGUI dadosGUI = new DadosGUI(p.getId(),tempo,"Bloqueado",p.getPrioridade(),p.getDuracao(),"Usuário");
                     
                     listaBloqueado.add(p);
                     listaPronto.remove(p);

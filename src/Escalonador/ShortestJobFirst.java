@@ -72,6 +72,8 @@ public class ShortestJobFirst {
 
                 listaPronto.add(listaProcesso.getFirst());
                 System.out.println("[" + tempo + "][Chegada] Processo " + listaProcesso.getFirst().getId());
+                DadosGUI dadosGUI = new DadosGUI(listaProcesso.getFirst().getId(), tempo, "Chegada", listaProcesso.getFirst().getPrioridade(), listaProcesso.getFirst().getDuracao(), "Usuário");
+                
                 listaProcesso.removeFirst();
 
             }
@@ -109,6 +111,7 @@ public class ShortestJobFirst {
 
         } else if (p.getDuracao() == 0) {
             System.out.println("[" + tempo + "] [Termino] Processo " + p.getId());
+            DadosGUI dadosGUI = new DadosGUI(p.getId(),tempo,"Término",p.getPrioridade(),p.getDuracao(),"Usuário");
             listaPronto.remove(p);
             flag = false;
             tempo--;

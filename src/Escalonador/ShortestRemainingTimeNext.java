@@ -46,7 +46,7 @@ public class ShortestRemainingTimeNext {
             } else {
                 tempo++;
             }
-        } while (!(listaProcesso.isEmpty() && listaPronto.isEmpty()));
+        } while (!(listaProcesso.isEmpty() && listaPronto.isEmpty() && listaBloqueado.isEmpty()));
         System.out.println("Fim do while");
 
     }
@@ -74,6 +74,8 @@ public class ShortestRemainingTimeNext {
 
                 listaPronto.add(listaProcesso.getFirst());
                 System.out.println("[" + tempo + "] [Chegada] Processo " + listaProcesso.getFirst().getId());
+                DadosGUI dados1 = new DadosGUI(listaProcesso.getFirst().getId(), tempo, "Chegada", listaProcesso.getFirst().getPrioridade(), listaProcesso.getFirst().getDuracao(), "Usuário");
+                
                 listaProcesso.removeFirst();
                 this.flag = false;
 
@@ -84,35 +86,48 @@ public class ShortestRemainingTimeNext {
     public void executar(Processo p) {
 
         if (p.getTipo().equals(Tipo.Sistema)) {
-            System.out.println("[" + tempo + "] [SISTEMA] Executando processo do sistema");
-            if (!listaBloqueado.isEmpty()) {
-                for (int i = listaBloqueado.size(); i > 0; i--) {
-                    listaPronto.add(listaBloqueado.getFirst());
-                    listaBloqueado.removeFirst();
-                    flag = false;
-                }
-            }
+            executarProcessoSistema();
 
         } else if (!p.getListaES().isEmpty()) {
-            for (int i = 0; i < p.getListaES().size(); i++) {
-                if (tempo == p.getListaES().get(i)) {
-                    System.out.println("[" + tempo + "] [Bloqueado] Processo " + listaPronto.getFirst().getId());
-                    
-                    
-                    listaBloqueado.add(p);
-                    listaPronto.remove(p);
-                }
-            }
-        } else if (p.getDuracao() > 0) {
+            verificaBloqueado(p);
+        }
+
+        if (p.getDuracao() > 0 && p.getTipo().equals(Tipo.Usuario)) {
             System.out.println("[" + tempo + "] [Executando] Processo " + p.getId());
             DadosGUI dados = new DadosGUI(p.getId(), tempo, "Executando", p.getPrioridade(), p.getDuracao(), "Usuário");
             p.setDuracao(p.getDuracao() - 1);
 
-        } else if (p.getDuracao() == 0) {
+        } else if (p.getDuracao() == 0 && p.getTipo().equals(Tipo.Usuario)) {
             System.out.println("[" + tempo + "] [Termino] Processo " + p.getId());
+            DadosGUI dadosGUI = new DadosGUI(p.getId(),tempo,"Término",p.getPrioridade(),p.getDuracao(),"Usuário");
             listaPronto.remove(p);
             flag = false;
             tempo--;
         }
+    }
+
+    void executarProcessoSistema() {
+        System.out.println("[" + tempo + "] [SISTEMA] Executando processo do sistema");
+        DadosGUI dados = new DadosGUI(this.tempo, "Executando", "Sistema");
+        
+        if (!listaBloqueado.isEmpty()) {
+            for (int i = listaBloqueado.size(); i > 0; i--) {
+                listaPronto.add(listaBloqueado.getFirst());
+                listaBloqueado.removeFirst();
+                flag = false;
+            }
+        }
+    }
+
+    void verificaBloqueado(Processo p) {
+        for (int i = 0; i < p.getListaES().size(); i++) {
+            if (tempo == p.getListaES().get(i)) {
+                System.out.println("[" + tempo + "] [Bloqueado] Processo " + listaPronto.getFirst().getId());
+                
+                listaBloqueado.add(p);
+                listaPronto.remove(p);
+            }
+        }
+
     }
 }
