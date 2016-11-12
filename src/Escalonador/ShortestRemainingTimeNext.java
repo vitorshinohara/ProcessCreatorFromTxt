@@ -75,7 +75,7 @@ public class ShortestRemainingTimeNext {
                 listaPronto.add(listaProcesso.getFirst());
                 System.out.println("[" + tempo + "] [Chegada] Processo " + listaProcesso.getFirst().getId());
                 DadosGUI dados1 = new DadosGUI(listaProcesso.getFirst().getId(), tempo, "Chegada", listaProcesso.getFirst().getPrioridade(), listaProcesso.getFirst().getDuracao(), "Usuário");
-                
+
                 listaProcesso.removeFirst();
                 this.flag = false;
 
@@ -99,17 +99,19 @@ public class ShortestRemainingTimeNext {
 
         } else if (p.getDuracao() == 0 && p.getTipo().equals(Tipo.Usuario)) {
             System.out.println("[" + tempo + "] [Termino] Processo " + p.getId());
-            DadosGUI dadosGUI = new DadosGUI(p.getId(),tempo,"Término",p.getPrioridade(),p.getDuracao(),"Usuário");
+            DadosGUI dadosGUI = new DadosGUI(p.getId(), tempo, "Término", p.getPrioridade(), p.getDuracao(), "Usuário");
             listaPronto.remove(p);
             flag = false;
             tempo--;
         }
     }
 
-    void executarProcessoSistema() {
+    private void executarProcessoSistema() {
+        tempo++;
+        verificaListaProcessos();
         System.out.println("[" + tempo + "] [SISTEMA] Executando processo do sistema");
         DadosGUI dados = new DadosGUI(this.tempo, "Executando", "Sistema");
-        
+
         if (!listaBloqueado.isEmpty()) {
             for (int i = listaBloqueado.size(); i > 0; i--) {
                 listaPronto.add(listaBloqueado.getFirst());
@@ -117,13 +119,15 @@ public class ShortestRemainingTimeNext {
                 flag = false;
             }
         }
+        tempo++;
+        verificaListaProcessos();
     }
 
-    void verificaBloqueado(Processo p) {
+    private void verificaBloqueado(Processo p) {
         for (int i = 0; i < p.getListaES().size(); i++) {
             if (tempo == p.getListaES().get(i)) {
                 System.out.println("[" + tempo + "] [Bloqueado] Processo " + listaPronto.getFirst().getId());
-                
+
                 listaBloqueado.add(p);
                 listaPronto.remove(p);
             }

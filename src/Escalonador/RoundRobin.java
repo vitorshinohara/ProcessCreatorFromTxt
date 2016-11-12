@@ -53,26 +53,13 @@ public class RoundRobin {
         }
     }
 
-    public void executar() {
+    private void executar() {
         int i = 0;
         boolean ES = false;
 
         if (listaPronto.size() > 1) {
             if (listaPronto.getFirst().getTipo().equals(Tipo.Sistema)) {
-
-                tempo++;
-                verificaListaProcessos();
-                System.out.println("[" + tempo + "][Executando] Processo do SISTEMA.");
-                DadosGUI dados = new DadosGUI(this.tempo, "Executando", "Sistema");
-
-                for (int j = listaBloqueado.size(); j > 0; j--) {
-                    listaPronto.add(listaBloqueado.getFirst());
-                    listaBloqueado.removeFirst();
-                }
-
-                listaPronto.add(listaPronto.getFirst());
-                listaPronto.removeFirst();
-
+                executarProcessoSistema();
             }
         }
 
@@ -123,10 +110,27 @@ public class RoundRobin {
         }
     }
 
-    public void bloquear(Processo p) {
+    private void bloquear(Processo p) {
         listaBloqueado.add(p);
         listaPronto.remove(p);
         p.getListaES().remove(p.getListaES().getFirst());
     }
 
+    private void executarProcessoSistema() {
+        tempo++;
+        verificaListaProcessos();
+        System.out.println("[" + tempo + "][Executando] Processo do SISTEMA.");
+        DadosGUI dados = new DadosGUI(this.tempo, "Executando", "Sistema");
+
+        for (int j = listaBloqueado.size(); j > 0; j--) {
+            listaPronto.add(listaBloqueado.getFirst());
+            listaBloqueado.removeFirst();
+        }
+
+        listaPronto.add(listaPronto.getFirst());
+        listaPronto.removeFirst();
+
+        tempo++;
+        verificaListaProcessos();
+    }
 }
