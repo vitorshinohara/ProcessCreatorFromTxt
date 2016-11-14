@@ -5,11 +5,7 @@
  */
 package GUI;
 
-import Escalonador.Prioridade;
-import Escalonador.RoundRobin;
-import Escalonador.ShortestJobFirst;
-import Escalonador.ShortestRemainingTimeNext;
-import Processos.Processo;
+import Escalonador.DadosGUI;
 import java.util.LinkedList;
 import javax.swing.table.AbstractTableModel;
 
@@ -18,36 +14,45 @@ import javax.swing.table.AbstractTableModel;
  * @author elivelton
  */
 public class TabelaTimeLine extends AbstractTableModel{
-    private LinkedList<Processo> linhas = null;
+    private LinkedList<DadosGUI> linhas = new LinkedList();
+    private int qtdLinhas = 0;
+    
+    public void TabelaTimeLine(LinkedList<DadosGUI> dados){
+        qtdLinhas = dados.size();
+        adicionar(dados);
+    }
 
     @Override
     public int getRowCount() {
-        return linhas.size();
+        return qtdLinhas;
     }
 
     @Override
     public int getColumnCount() {
-        return 5;
+        return 6;
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Processo processo = linhas.get(rowIndex);
+        DadosGUI processo = linhas.get(rowIndex);
         switch(columnIndex){
             case 0:{
-                //return tempo
+                return processo.getTempo();
             }
             case 1:{
-                //return acao;
+                return processo.getTipo();
             }
             case 2:{
-                return processo.getId();
+                return processo.getAcao();
             }
             case 3:{
-                return processo.getPrioridade();
+                return processo.getIdProcesso();
             }
             case 4:{
-                return processo.getDuracao();
+                return processo.getPrioridade();
+            }
+            case 5:{
+                return processo.getTempoRestante();
             }
             default:{
                 return " ";
@@ -61,40 +66,27 @@ public class TabelaTimeLine extends AbstractTableModel{
             case 0:
                 return "Tempo";
             case 1:
-                return "Ação";
+                return "Tipo Processo";
             case 2:
-                return "Processo";
+                return "Ação";
             case 3:
-                return "Prioridade";
+                return "Processo";
             case 4:
+                return "Prioridade";
+            case 5:
                 return "Tempo Restante";
             default:
                 return "";
         }
     }
-    
-    public void adicionar(Processo p, int algoritmo, LinkedList<Processo> listaProcesso){
-        switch(algoritmo){
-            case 1:{
-                ShortestJobFirst sjf = new ShortestJobFirst();
-                sjf.iniciar(listaProcesso);
-                //fireTableRowsInserted(algoritmo, algoritmo);
-            }
-            case 2:{
-                Prioridade prio = new Prioridade();
-                prio.inicializar(listaProcesso);
-                //fireTableRowsInserted(algoritmo, algoritmo);
-            }
-            case 3:{
-                RoundRobin rr = new RoundRobin();
-                rr.inicializar(listaProcesso);
-                //fireTableRowsInserted(algoritmo, algoritmo);
-            }
-            case 4:{
-                ShortestRemainingTimeNext strn = new ShortestRemainingTimeNext();
-                strn.iniciar(listaProcesso);
-                //fireTableRowsInserted(algoritmo, algoritmo);
-            }
+
+    public void adicionar(LinkedList<DadosGUI> dados){
+        for(int i=0; i < dados.size(); i++){
+            linhas.add(dados.get(i));
+        
+            fireTableRowsInserted(linhas.size()-1, linhas.size()-1);
+            fireTableRowsUpdated(linhas.size()-1, linhas.size()-1);
         }
+
     }
 }

@@ -1,5 +1,6 @@
 package Escalonador;
 
+import GUI.TelaEscalonador;
 import Processos.Processo;
 import Processos.Tipo;
 import java.util.LinkedList;
@@ -13,12 +14,14 @@ public class Prioridade {
     LinkedList<Processo> listaProcesso = null;
     LinkedList<Processo> listaPronto = new LinkedList();
     LinkedList<Processo> listaBloqueado = new LinkedList();
+    public LinkedList<DadosGUI> dados = new LinkedList();
     private boolean flag = true;
     int tempo = 0;
 
-    public void inicializar(LinkedList<Processo> listaProcesso) {
+    public LinkedList<DadosGUI> inicializar(LinkedList<Processo> listaProcesso) {
         this.listaProcesso = listaProcesso;
         escalonar();
+        return dados;
     }
 
     public void escalonar() {
@@ -43,7 +46,6 @@ public class Prioridade {
 
             tempo++;
         } while (!(listaProcesso.isEmpty() && listaPronto.isEmpty()));
-        System.out.println("Fim do while");
     }
 
     public Processo prioridade() {
@@ -72,13 +74,12 @@ public class Prioridade {
 
         } else if (p.getDuracao() > 0) {
             p.setDuracao(p.getDuracao() - 1);
-            System.out.println("[" + tempo + "][Executando] Processo " + p.getId());
-            DadosGUI dados = new DadosGUI(p.getId(), tempo, "Executando", p.getPrioridade(), p.getDuracao(), "Usuário");
+            //System.out.println("[" + tempo + "][Executando] Processo " + p.getId());
+            dados.add(new DadosGUI(p.getId(), tempo, "Executando", p.getPrioridade(), p.getDuracao(), "Usuário"));
             if (p.getDuracao() == 0) {
                 listaPronto.remove(p);
-
-                System.out.println("[" + (tempo + 1) + "][Término] Processo " + p.getId());
-                DadosGUI dadosGUI = new DadosGUI(p.getId(), tempo, "Término", p.getPrioridade(), p.getDuracao(), "Usuário");
+                //System.out.println("[" + (tempo + 1) + "][Término] Processo " + p.getId());
+                dados.add(new DadosGUI(p.getId(), tempo, "Término", p.getPrioridade(), p.getDuracao(), "Usuário"));
 
                 flag = true;
             }
@@ -89,8 +90,8 @@ public class Prioridade {
         if (!listaProcesso.isEmpty()) {
             if (listaProcesso.getFirst().getTempo() == tempo) {
                 listaPronto.add(listaProcesso.getFirst());
-                System.out.println("[" + tempo + "][Chegada] Processo " + listaProcesso.getFirst().getId());
-                DadosGUI dadosGUI = new DadosGUI(listaProcesso.getFirst().getId(), tempo, "Chegada", listaProcesso.getFirst().getPrioridade(), listaProcesso.getFirst().getDuracao(), "Usuário");
+                //System.out.println("[" + tempo + "][Chegada] Processo " + listaProcesso.getFirst().getId());
+                dados.add(new DadosGUI(listaProcesso.getFirst().getId(), tempo, "Chegada", listaProcesso.getFirst().getPrioridade(), listaProcesso.getFirst().getDuracao(), "Usuário"));
                 listaProcesso.removeFirst();
                 flag = true;
             }
@@ -100,8 +101,8 @@ public class Prioridade {
     private void executarProcessoSistema() {
         tempo++;
         verificaListaProcessos();
-        System.out.println("[" + tempo + "][Executando] Processo do SISTEMA.");
-        DadosGUI dados = new DadosGUI(this.tempo, "Executando", "Sistema");
+        //System.out.println("[" + tempo + "][Executando] Processo do SISTEMA.");
+        dados.add(new DadosGUI(this.tempo, "Executando", "Sistema"));
 
         if (!listaBloqueado.isEmpty()) {
             for (int i = listaBloqueado.size(); i > 0; i--) {
@@ -113,14 +114,13 @@ public class Prioridade {
             tempo++;
             verificaListaProcessos();
         }
-
     }
 
     private void verificaBlqueado(Processo p) {
         for (int i = 0; i < p.getListaES().size(); i++) {
             if (tempo == p.getListaES().get(i)) {
-                System.out.println("[" + tempo + "] [Bloqueado] Processo " + p.getId());
-                DadosGUI dadosGUI = new DadosGUI(p.getId(), tempo, "Bloqueado", p.getPrioridade(), p.getDuracao(), "Usuário");
+                //System.out.println("[" + tempo + "] [Bloqueado] Processo " + p.getId());
+                dados.add(new DadosGUI(p.getId(), tempo, "Bloqueado", p.getPrioridade(), p.getDuracao(), "Usuário"));
 
                 listaBloqueado.add(p);
                 listaPronto.remove(p);

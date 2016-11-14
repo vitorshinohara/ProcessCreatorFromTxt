@@ -25,7 +25,6 @@ public class DadosGUI {
         this.tempoRestante = tempoRestante;
         this.tipo = tipo;
     }
-    
 
     public DadosGUI(int tempo, String acao, String tipo) {
         this.tempo = tempo;
