@@ -15,7 +15,7 @@ public class RoundRobin {
     LinkedList<Processo> listaProcesso = new LinkedList();
     public LinkedList<DadosGUI> dados = new LinkedList();
     int quantun;
-    int tempo = 0;
+    int tempo = 0;    
 
     public LinkedList<DadosGUI> inicializar(LinkedList<Processo> x) {
         this.listaProcesso = x;
@@ -38,8 +38,7 @@ public class RoundRobin {
             } else {
                 tempo++;
             }
-        } while (!(listaProcesso.isEmpty() && listaPronto.isEmpty()));
-
+        } while (listaPronto.size() > 1);
     }
 
     public void verificaListaProcessos() {
@@ -51,7 +50,6 @@ public class RoundRobin {
                 dados.add(new DadosGUI(listaProcesso.getFirst().getId(), tempo, "Chegada", listaProcesso.getFirst().getPrioridade(), listaProcesso.getFirst().getDuracao(), "Usuário"));
 
                 listaProcesso.removeFirst();
-
             }
         }
     }
@@ -67,7 +65,6 @@ public class RoundRobin {
         }
 
         while (listaPronto.getFirst().getDuracao() > 0 && i < quantun) {
-
             if (!listaPronto.getFirst().getListaES().isEmpty()) {
                 for (int j = 0; j < listaPronto.getFirst().getListaES().size(); j++) {
                     if (listaPronto.getFirst().getListaES().get(j) == tempo) {

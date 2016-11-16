@@ -1,6 +1,5 @@
 package Escalonador;
 
-import GUI.TelaEscalonador;
 import Processos.Processo;
 import Processos.Tipo;
 import java.util.LinkedList;
