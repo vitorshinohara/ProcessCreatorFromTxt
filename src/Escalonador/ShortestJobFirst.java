@@ -23,6 +23,8 @@ public class ShortestJobFirst {
         pSistema.setTipo(Tipo.Sistema);
         escalonar();
         
+        System.out.println("Entrei SJF!");
+        
         return dados;
     }
 

@@ -83,10 +83,11 @@ public class TabelaTimeLine extends AbstractTableModel{
     public void adicionar(LinkedList<DadosGUI> dados){
         for(int i=0; i < dados.size(); i++){
             linhas.add(dados.get(i));
-        
+
             fireTableRowsInserted(linhas.size()-1, linhas.size()-1);
             fireTableRowsUpdated(linhas.size()-1, linhas.size()-1);
         }
-
+        
+        
     }
 }

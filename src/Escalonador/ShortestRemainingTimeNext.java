@@ -23,6 +23,8 @@ public class ShortestRemainingTimeNext {
         pSistema.setTipo(Tipo.Sistema);
         escalonar();
         
+        System.out.println("Entrei SRTN!");
+        
         return dados;
     }
 
@@ -49,8 +51,6 @@ public class ShortestRemainingTimeNext {
             } else {
                 tempo++;
             }
-            System.out.println("Lista Processo : " + listaProcesso.size());
-            System.out.println("Lista Pronto : " + listaPronto.size());
         } while (!(listaProcesso.isEmpty() && listaPronto.isEmpty() && listaBloqueado.isEmpty()));
     }
 

@@ -24,6 +24,7 @@ public class RoundRobin {
         pSistema.setDuracao(0);
         listaPronto.add(pSistema);
         escalonar(4);
+        System.out.println("Entrei RR");
 
         return dados;
     }

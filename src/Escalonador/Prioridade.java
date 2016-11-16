@@ -20,6 +20,8 @@ public class Prioridade {
     public LinkedList<DadosGUI> inicializar(LinkedList<Processo> listaProcesso) {
         this.listaProcesso = listaProcesso;
         escalonar();
+        
+        System.out.println("Entrei Prio.");
         return dados;
     }
 
