@@ -45,7 +45,7 @@ public class ShortestJobFirst {
 
                     while (flag) {
                         tempo++;
-                        //System.out.println("[" + tempo + "] [Executando] processo " + p_Executar.getId());
+                        System.out.println("[" + tempo + "] [Executando] processo " + p_Executar.getId());
                         dados.add(new DadosGUI(p_Executar.getId(), tempo, "Executando", p_Executar.getPrioridade(), p_Executar.getDuracao(), "Usuário"));
                         executar(p_Executar);
                         verificaListaProcessos();
@@ -74,7 +74,7 @@ public class ShortestJobFirst {
             if (listaProcesso.getFirst().getTempo() == tempo) {
 
                 listaPronto.add(listaProcesso.getFirst());
-                //System.out.println("[" + tempo + "][Chegada] Processo " + listaProcesso.getFirst().getId());
+                System.out.println("[" + tempo + "][Chegada] Processo " + listaProcesso.getFirst().getId());
                 dados.add(new DadosGUI(listaProcesso.getFirst().getId(), tempo, "Chegada", listaProcesso.getFirst().getPrioridade(), listaProcesso.getFirst().getDuracao(), "Usuário"));
 
                 listaProcesso.removeFirst();
@@ -91,11 +91,13 @@ public class ShortestJobFirst {
         } else if (!p.getListaES().isEmpty()) {
             verificaBloqueado(p);
 
-        } else if (p.getDuracao() > 0) {
+        }if (p.getDuracao() > 0 && p.getTipo().equals(Tipo.Usuario) && flag == true) {
             p.setDuracao(p.getDuracao() - 1);
-
-        } else if (p.getDuracao() == 0) {
-            //System.out.println("[" + tempo + "] [Termino] Processo " + p.getId());
+            System.out.println("Duracao "+p.getDuracao());
+        }
+        
+        if (p.getDuracao() == 0 && p.getTipo().equals(Tipo.Usuario)) {
+            System.out.println("[" + tempo + "] [Termino] Processo " + p.getId());
             dados.add(new DadosGUI(p.getId(), tempo, "Término", p.getPrioridade(), p.getDuracao(), "Usuário"));
             listaPronto.remove(p);
             flag = false;
@@ -106,10 +108,9 @@ public class ShortestJobFirst {
     private void executaProcessoSistema() {
         tempo++;
         verificaListaProcessos();
-        //System.out.println("[" + tempo + "] [SISTEMA] Executando processo do sistema");
+        System.out.println("[" + tempo + "] [SISTEMA] Executando processo do sistema");
         dados.add(new DadosGUI(this.tempo, "Executando", "Sistema"));
-        tempo++;
-        verificaListaProcessos();
+        
 
         if (!listaBloqueado.isEmpty()) {
             for (int i = listaBloqueado.size(); i > 0; i--) {
@@ -127,6 +128,7 @@ public class ShortestJobFirst {
             if (tempo == p.getListaES().get(i)) {
                 listaBloqueado.add(p);
                 listaPronto.remove(p);
+                flag = false;
             }
         }
     }

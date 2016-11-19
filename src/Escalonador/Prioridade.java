@@ -19,9 +19,9 @@ public class Prioridade {
 
     public LinkedList<DadosGUI> inicializar(LinkedList<Processo> listaProcesso) {
         this.listaProcesso = listaProcesso;
+        System.out.println("Entrei Prio.");
         escalonar();
         
-        System.out.println("Entrei Prio.");
         return dados;
     }
 
@@ -46,6 +46,8 @@ public class Prioridade {
             }
 
             tempo++;
+//            System.out.println("Lista Pronto " +listaPronto.size());
+//            System.out.println("Lista Processo " +listaProcesso.size());
         } while (!(listaProcesso.isEmpty() && listaPronto.isEmpty()));
     }
 
@@ -73,13 +75,14 @@ public class Prioridade {
         } else if (!p.getListaES().isEmpty()) {
             verificaBlqueado(p);
 
-        } else if (p.getDuracao() > 0) {
+        } else if (p.getDuracao() > 0 && !flag) {
             p.setDuracao(p.getDuracao() - 1);
-            //System.out.println("[" + tempo + "][Executando] Processo " + p.getId());
+            System.out.println("Executando processo "+p.getId());
             dados.add(new DadosGUI(p.getId(), tempo, "Executando", p.getPrioridade(), p.getDuracao(), "Usuário"));
+
             if (p.getDuracao() == 0) {
                 listaPronto.remove(p);
-                //System.out.println("[" + (tempo + 1) + "][Término] Processo " + p.getId());
+
                 dados.add(new DadosGUI(p.getId(), tempo, "Término", p.getPrioridade(), p.getDuracao(), "Usuário"));
 
                 flag = true;
@@ -91,7 +94,7 @@ public class Prioridade {
         if (!listaProcesso.isEmpty()) {
             if (listaProcesso.getFirst().getTempo() == tempo) {
                 listaPronto.add(listaProcesso.getFirst());
-                //System.out.println("[" + tempo + "][Chegada] Processo " + listaProcesso.getFirst().getId());
+                System.out.println("[" + tempo + "][Chegada] Processo " + listaProcesso.getFirst().getId());
                 dados.add(new DadosGUI(listaProcesso.getFirst().getId(), tempo, "Chegada", listaProcesso.getFirst().getPrioridade(), listaProcesso.getFirst().getDuracao(), "Usuário"));
                 listaProcesso.removeFirst();
                 flag = true;
@@ -102,15 +105,14 @@ public class Prioridade {
     private void executarProcessoSistema() {
         tempo++;
         verificaListaProcessos();
-        //System.out.println("[" + tempo + "][Executando] Processo do SISTEMA.");
         dados.add(new DadosGUI(this.tempo, "Executando", "Sistema"));
 
         if (!listaBloqueado.isEmpty()) {
             for (int i = listaBloqueado.size(); i > 0; i--) {
                 listaPronto.add(listaBloqueado.getFirst());
                 listaBloqueado.removeFirst();
-                flag = true;
             }
+                flag = true;
 
             tempo++;
             verificaListaProcessos();
@@ -120,13 +122,12 @@ public class Prioridade {
     private void verificaBlqueado(Processo p) {
         for (int i = 0; i < p.getListaES().size(); i++) {
             if (tempo == p.getListaES().get(i)) {
-                //System.out.println("[" + tempo + "] [Bloqueado] Processo " + p.getId());
                 dados.add(new DadosGUI(p.getId(), tempo, "Bloqueado", p.getPrioridade(), p.getDuracao(), "Usuário"));
-
+                System.out.println("Bloqueou");
+                p.getListaES().remove(i);
                 listaBloqueado.add(p);
                 listaPronto.remove(p);
                 flag = true;
-                p.getListaES().remove(i);
             }
         }
     }
