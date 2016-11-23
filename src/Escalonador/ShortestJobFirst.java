@@ -22,9 +22,6 @@ public class ShortestJobFirst {
         this.listaProcesso = listaProcesso; // Lista de processos retirados do arquivo ordenados por ordem de chegada.
         pSistema.setTipo(Tipo.Sistema);
         escalonar();
-        
-        System.out.println("Entrei SJF!");
-        
         return dados;
     }
 
@@ -34,7 +31,7 @@ public class ShortestJobFirst {
         do {
 
             verificaListaProcessos();
-            if (flag == false && tempo % 10 == 0) {
+            if (!listaBloqueado.isEmpty() && tempo % 3 == 0) {
                 executar(pSistema);
             }
 
@@ -45,7 +42,6 @@ public class ShortestJobFirst {
 
                     while (flag) {
                         tempo++;
-                        System.out.println("[" + tempo + "] [Executando] processo " + p_Executar.getId());
                         dados.add(new DadosGUI(p_Executar.getId(), tempo, "Executando", p_Executar.getPrioridade(), p_Executar.getDuracao(), "Usuário"));
                         executar(p_Executar);
                         verificaListaProcessos();
@@ -93,11 +89,9 @@ public class ShortestJobFirst {
 
         }if (p.getDuracao() > 0 && p.getTipo().equals(Tipo.Usuario) && flag == true) {
             p.setDuracao(p.getDuracao() - 1);
-            System.out.println("Duracao "+p.getDuracao());
         }
         
-        if (p.getDuracao() == 0 && p.getTipo().equals(Tipo.Usuario)) {
-            System.out.println("[" + tempo + "] [Termino] Processo " + p.getId());
+        if (p.getDuracao() == 0 && p.getTipo().equals(Tipo.Usuario) && flag == true) {
             dados.add(new DadosGUI(p.getId(), tempo, "Término", p.getPrioridade(), p.getDuracao(), "Usuário"));
             listaPronto.remove(p);
             flag = false;
@@ -108,7 +102,7 @@ public class ShortestJobFirst {
     private void executaProcessoSistema() {
         tempo++;
         verificaListaProcessos();
-        System.out.println("[" + tempo + "] [SISTEMA] Executando processo do sistema");
+        System.out.println("teste");
         dados.add(new DadosGUI(this.tempo, "Executando", "Sistema"));
         
 
@@ -126,9 +120,14 @@ public class ShortestJobFirst {
         for (int i = 0; i < p.getListaES().size(); i++) {
 
             if (tempo == p.getListaES().get(i)) {
+                dados.add(new DadosGUI(p.getId(), tempo, "Bloqueio", p.getPrioridade(), p.getDuracao(), "Usuário"));
                 listaBloqueado.add(p);
                 listaPronto.remove(p);
                 flag = false;
+                
+            }
+            else if(tempo > p.getListaES().get(i)){
+                p.getListaES().remove(i);
             }
         }
     }

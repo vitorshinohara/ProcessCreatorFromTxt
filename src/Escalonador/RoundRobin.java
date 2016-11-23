@@ -24,7 +24,6 @@ public class RoundRobin {
         pSistema.setDuracao(0);
         listaPronto.add(pSistema);
         escalonar(4);
-        System.out.println("Entrei RR");
 
         return dados;
     }
@@ -110,12 +109,6 @@ public class RoundRobin {
             listaPronto.addLast(listaPronto.getFirst());
             listaPronto.removeFirst();
         }
-    }
-
-    private void bloquear(Processo p) {
-        listaBloqueado.add(p);
-        listaPronto.remove(p);
-        p.getListaES().remove(p.getListaES().getFirst());
     }
 
     private void executarProcessoSistema() {
