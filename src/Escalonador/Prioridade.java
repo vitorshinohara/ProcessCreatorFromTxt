@@ -15,13 +15,14 @@ public class Prioridade {
     LinkedList<Processo> listaBloqueado = new LinkedList();
     public LinkedList<DadosGUI> dados = new LinkedList();
     private boolean flag = true;
+    Processo pSistema = new Processo();
     int tempo = 0;
 
     public LinkedList<DadosGUI> inicializar(LinkedList<Processo> listaProcesso) {
         this.listaProcesso = listaProcesso;
-        System.out.println("Entrei Prio.");
+        pSistema.setTipo(Tipo.Sistema);
         escalonar();
-        
+
         return dados;
     }
 
@@ -29,6 +30,10 @@ public class Prioridade {
         Processo processo = null;
         do {
             verificaListaProcessos();
+            if (tempo % 3 == 0 && !listaBloqueado.isEmpty()) {
+                executar(pSistema);
+            }
+
             if (flag) {
                 processo = prioridade();
                 if (processo != null) {
@@ -39,15 +44,16 @@ public class Prioridade {
 
             while (!flag) {
                 if (processo != null) {
+
                     executar(processo);
                     tempo++;
                 }
+                System.out.println("tempo while " + tempo);
                 verificaListaProcessos();
             }
 
             tempo++;
-//            System.out.println("Lista Pronto " +listaPronto.size());
-//            System.out.println("Lista Processo " +listaProcesso.size());
+            System.out.println("tempo fora while " + tempo);
         } while (!(listaProcesso.isEmpty() && listaPronto.isEmpty()));
     }
 
@@ -77,7 +83,6 @@ public class Prioridade {
 
         } else if (p.getDuracao() > 0 && !flag) {
             p.setDuracao(p.getDuracao() - 1);
-            System.out.println("Executando processo "+p.getId());
             dados.add(new DadosGUI(p.getId(), tempo, "Executando", p.getPrioridade(), p.getDuracao(), "Usuário"));
 
             if (p.getDuracao() == 0) {
@@ -87,6 +92,7 @@ public class Prioridade {
 
                 flag = true;
             }
+
         }
     }
 
@@ -94,7 +100,6 @@ public class Prioridade {
         if (!listaProcesso.isEmpty()) {
             if (listaProcesso.getFirst().getTempo() == tempo) {
                 listaPronto.add(listaProcesso.getFirst());
-                System.out.println("[" + tempo + "][Chegada] Processo " + listaProcesso.getFirst().getId());
                 dados.add(new DadosGUI(listaProcesso.getFirst().getId(), tempo, "Chegada", listaProcesso.getFirst().getPrioridade(), listaProcesso.getFirst().getDuracao(), "Usuário"));
                 listaProcesso.removeFirst();
                 flag = true;
@@ -103,8 +108,7 @@ public class Prioridade {
     }
 
     private void executarProcessoSistema() {
-        tempo++;
-        verificaListaProcessos();
+
         dados.add(new DadosGUI(this.tempo, "Executando", "Sistema"));
 
         if (!listaBloqueado.isEmpty()) {
@@ -112,10 +116,8 @@ public class Prioridade {
                 listaPronto.add(listaBloqueado.getFirst());
                 listaBloqueado.removeFirst();
             }
-                flag = true;
+            flag = true;
 
-            tempo++;
-            verificaListaProcessos();
         }
     }
 
@@ -128,6 +130,8 @@ public class Prioridade {
                 listaBloqueado.add(p);
                 listaPronto.remove(p);
                 flag = true;
+                tempo--;
+                break;
             }
         }
     }

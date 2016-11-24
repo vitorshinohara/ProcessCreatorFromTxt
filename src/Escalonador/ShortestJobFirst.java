@@ -124,6 +124,7 @@ public class ShortestJobFirst {
                 listaBloqueado.add(p);
                 listaPronto.remove(p);
                 flag = false;
+                tempo--;
                 
             }
             else if(tempo > p.getListaES().get(i)){

@@ -5,6 +5,8 @@
  */
 package Escalonador;
 
+import Processos.Tipo;
+
 /**
  *
  * @author vitor
@@ -30,6 +32,9 @@ public class DadosGUI {
         this.tempo = tempo;
         this.acao = acao;
         this.tipo = tipo;
+        this.idProcesso = 0;
+        this.prioridade = 0;
+        this.tempoRestante = 0;
     }
 
     public int getIdProcesso() {
