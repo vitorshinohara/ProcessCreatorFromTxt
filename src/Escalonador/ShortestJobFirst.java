@@ -89,6 +89,7 @@ public class ShortestJobFirst {
 
         }if (p.getDuracao() > 0 && p.getTipo().equals(Tipo.Usuario) && flag == true) {
             p.setDuracao(p.getDuracao() - 1);
+            p.setTempoExecucao(p.getTempoExecucao() + 1);
         }
         
         if (p.getDuracao() == 0 && p.getTipo().equals(Tipo.Usuario) && flag == true) {
@@ -119,7 +120,7 @@ public class ShortestJobFirst {
     private void verificaBloqueado(Processo p) {
         for (int i = 0; i < p.getListaES().size(); i++) {
 
-            if (tempo == p.getListaES().get(i)) {
+            if (p.getTempoExecucao() == p.getListaES().get(i)) {
                 dados.add(new DadosGUI(p.getId(), tempo, "Bloqueio", p.getPrioridade(), p.getDuracao(), "Usuário"));
                 listaBloqueado.add(p);
                 listaPronto.remove(p);

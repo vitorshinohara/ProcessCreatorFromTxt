@@ -17,6 +17,7 @@ public class Processo implements Comparable<Processo> {
     private Tipo tipo;
     private LinkedList<Integer> listaES = new LinkedList();
     private String caminhoArquivo;
+    private int tempoExecucao = 0;
 
     public Processo(int id, int duracao, int prioridade, Estado estado, int tempo, LinkedList<Integer> listaES, Tipo tipo) {
         this.id = id;
@@ -100,6 +101,8 @@ public class Processo implements Comparable<Processo> {
         this.caminhoArquivo = caminhoArquivo;
     }
     
+    
+    
     @Override
     public String toString() {
         return "Processo[" + "ID:" + id + ", Duracao:" + duracao + ", Prioridade:" + prioridade + ", Estado:" + estado + ", Tempo:" + tempo + ", Tipo:" + tipo + ", Lista de Entrada e Saída:" + listaES + ']';
@@ -114,6 +117,14 @@ public class Processo implements Comparable<Processo> {
         } else {
             return 0;
         }
+    }
+
+    public int getTempoExecucao() {
+        return tempoExecucao;
+    }
+
+    public void setTempoExecucao(int tempoExecucao) {
+        this.tempoExecucao = tempoExecucao;
     }
 
 }

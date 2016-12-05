@@ -83,6 +83,7 @@ public class Prioridade {
 
         } else if (p.getDuracao() > 0 && !flag) {
             p.setDuracao(p.getDuracao() - 1);
+            p.setTempoExecucao(p.getTempoExecucao()+1);
             dados.add(new DadosGUI(p.getId(), tempo, "Executando", p.getPrioridade(), p.getDuracao(), "Usuário"));
 
             if (p.getDuracao() == 0) {
@@ -123,9 +124,8 @@ public class Prioridade {
 
     private void verificaBlqueado(Processo p) {
         for (int i = 0; i < p.getListaES().size(); i++) {
-            if (tempo == p.getListaES().get(i)) {
+            if (p.getTempoExecucao() == p.getListaES().get(i)) {
                 dados.add(new DadosGUI(p.getId(), tempo, "Bloqueado", p.getPrioridade(), p.getDuracao(), "Usuário"));
-                System.out.println("Bloqueou");
                 p.getListaES().remove(i);
                 listaBloqueado.add(p);
                 listaPronto.remove(p);
